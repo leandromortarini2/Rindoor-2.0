@@ -2,10 +2,10 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Login from "@/assets/login.svg";
-import X from "@/assets/X.svg";
+import Login from "../../assets/login.svg";
+import X from "../../assets/X.svg";
 import { useState } from "react";
-import BurgerImg from "@/assets/burger.svg";
+import BurgerImg from "../../assets/burger.svg";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0/client";
 

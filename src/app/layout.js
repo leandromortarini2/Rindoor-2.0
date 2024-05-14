@@ -1,8 +1,8 @@
 "use client";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { NavBar } from "@/Components/NavBar/NavBar";
-import { Footer } from "@/Components/Footer/Footer";
+import { NavBar } from "../components/NavBar/NavBar";
+import { Footer } from "../Components/Footer/Footer";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Inter({ subsets: ["latin"] });
