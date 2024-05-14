@@ -1,0 +1,21 @@
+import React from "react";
+
+export const Register = () => {
+  return (
+    <div className="w-full bg-gray-800 flex flex-col items-center">
+      <h2 className="text-5xl text-center">Register</h2>
+      <form className="w-3/4 h-[450px] flex flex-col justify-evenly items-center ">
+        <input type="text" placeholder="firstName..." />
+        <input type="text" placeholder="lastName..." />
+        <input type="email" placeholder="email..." />
+        <input type="text" placeholder="phone..." />
+        <input type="text" placeholder="address..." />
+        <section>
+          <option value="role"></option>
+          <option value="client"></option>
+          <option value="professional"></option>
+        </section>
+      </form>
+    </div>
+  );
+};
