@@ -10,11 +10,11 @@ export const Register = () => {
         <input type="email" placeholder="email..." />
         <input type="text" placeholder="phone..." />
         <input type="text" placeholder="address..." />
-        <section>
-          <option value="role"></option>
-          <option value="client"></option>
-          <option value="professional"></option>
-        </section>
+        <select name="role" id="" className="bg-gray-900">
+          <option value="client">client</option>
+          <option value="professional">professional</option>
+        </select>
+        <button className="bg-gray-900">Register</button>
       </form>
     </div>
   );
