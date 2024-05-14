@@ -11,7 +11,7 @@ export const Register = () => {
         <input type="text" placeholder="celu..." />
         <input type="text" placeholder="address..." />
         <select name="role" id="" className="bg-gray-900">
-          <option value="client">client</option>
+          <option value="client">PPPP</option>
           <option value="professional">professional</option>
         </select>
         <button className="bg-yellow-900">Register</button>
