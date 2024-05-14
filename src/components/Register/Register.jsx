@@ -14,7 +14,7 @@ export const Register = () => {
           <option value="client">client</option>
           <option value="professional">professional</option>
         </select>
-        <button className="bg-gray-900">Register</button>
+        <button className="bg-yellow-900">Register</button>
       </form>
     </div>
   );
