@@ -8,7 +8,7 @@ export const Register = () => {
         <input type="text" placeholder="firstName..." />
         <input type="text" placeholder="lastName..." />
         <input type="email" placeholder="email..." />
-        <input type="text" placeholder="phone..." />
+        <input type="text" placeholder="celu..." />
         <input type="text" placeholder="address..." />
         <select name="role" id="" className="bg-gray-900">
           <option value="client">client</option>
