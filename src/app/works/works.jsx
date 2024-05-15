@@ -1,9 +1,9 @@
 "use client";
 
-import { CardContainer } from "@/components/CardContainer/CardContainer";
-import { PriceFilter } from "@/components/PriceFilter/PriceFilter";
-import { Selector } from "@/components/Selector/Selector";
-import { SubNav } from "@/components/SubNav/SubNav";
+import { CardContainer } from "../../components/CardContainer/CardContainer";
+import { PriceFilter } from "../../components/PriceFilter/PriceFilter";
+import { Selector } from "../../components/Selector/Selector";
+import { SubNav } from "../../components/SubNav/SubNav";
 import React, { useEffect, useState } from "react";
 import workCards from "./data";
 import { getWorks } from "../../helpers/helperWorks";

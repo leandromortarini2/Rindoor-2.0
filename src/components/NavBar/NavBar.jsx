@@ -7,12 +7,12 @@ import X from "../../assets/X.svg";
 import { useState } from "react";
 import BurgerImg from "../../assets/burger.svg";
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { signIn, useSession, signOut } from "next-auth/react";
 
 export const NavBar = () => {
   const [loginIcon, setLoginIcon] = useState(false);
 
-  const { user } = useUser();
+  const { data: session } = useSession();
 
   const [burger, setBurger] = useState(false);
 
@@ -106,25 +106,31 @@ export const NavBar = () => {
       {loginIcon === true ? (
         <div className="w-full flex justify-end">
           <div className="hidden w-1/4 min-h-20 bg-gray-700 rounded-b-xl z-20 md:flex flex-col justify-evenly items-center absolute ">
-            {user ? (
+            {session ? (
               <>
                 <Link href="/profile">
                   <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Profile
                   </button>
                 </Link>
-                <Link href="/api/auth/logout">
-                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                    Logout
-                  </button>
-                </Link>
+                <button
+                  onClick={() => {
+                    signOut();
+                  }}
+                  className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+                >
+                  Logout
+                </button>
               </>
             ) : (
-              <Link href="/api/auth/login">
-                <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                  Login
-                </button>
-              </Link>
+              <button
+                onClick={() => {
+                  signIn();
+                }}
+                className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+              >
+                Login
+              </button>
             )}
           </div>
         </div>
@@ -161,25 +167,32 @@ export const NavBar = () => {
           </div>
 
           <div className="w-full flex  justify-evenly items-center h-[100px] ">
-            {user ? (
+            {session ? (
               <>
                 <Link href="/profile">
                   <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Profile
                   </button>
                 </Link>
-                <Link href="/api/auth/logout">
-                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                    Logout
-                  </button>
-                </Link>
+
+                <button
+                  onClick={() => {
+                    signOut();
+                  }}
+                  className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+                >
+                  Logout
+                </button>
               </>
             ) : (
-              <Link href="/api/auth/login">
-                <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                  Login
-                </button>
-              </Link>
+              <button
+                onClick={() => {
+                  signIn();
+                }}
+                className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+              >
+                Login
+              </button>
             )}
           </div>
         </div>
