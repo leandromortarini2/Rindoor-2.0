@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "../components/NavBar/NavBar";
 import { Footer } from "../components/Footer/Footer";
-import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,13 +15,13 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <UserProvider>
-        <body className={inter.className}>
+      <body className={inter.className}>
+        <SessionProvider>
           <NavBar />
           {children}
           <Footer />
-        </body>
-      </UserProvider>
+        </SessionProvider>
+      </body>
     </html>
   );
 }

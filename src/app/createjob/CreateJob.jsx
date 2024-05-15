@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { validationsNewPost } from "@/helpers/validationsForm";
-import { postNewPublic } from "@/helpers/postNewPost";
-import { getCategory } from "@/helpers/getCategory";
+import { validationsNewPost } from "../../helpers/validationsForm";
+import { postNewPublic } from "../../helpers/postNewPost";
+import { getCategory } from "../../helpers/getCategory";
 
 const CreateJob = () => {
   const [postState, setPostState] = useState({

@@ -1,6 +1,5 @@
 export const validationsNewPost = (input) => {
   const errors = {};
-  const decimalRegex = `^\d+(\.\d+)?$`;
 
   // VALIDACION TITLE
   if (!input.name) errors.name = "Debe ingresar un título";

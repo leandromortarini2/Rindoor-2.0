@@ -1,32 +1,30 @@
 "use client";
-import { Register } from "@/components/Register/Register";
-
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { Register } from "../../components/Register/Register";
+import { useSession } from "next-auth/react";
 
 function ProfileClient() {
-  const { user, error, isLoading } = useUser();
+  const { data: session } = useSession();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-  console.log(user);
+  console.log(session);
 
   return (
-    user && (
+    session && (
       <>
         <div className="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 h-screen">
           <h2 className="text-gray-900 text-5xl font-bold">Personal Profile</h2>
           <div className="w-1/2 h-80 mt-10 bg-gray-900 rounded-3xl flex justify-evenly items-center shadow-black shadow-2xl">
             <img
-              src={user.picture}
-              alt={user.name}
+              src={session.user.image}
               className="w-40 h-40 rounded-full border-yellow-500 border-4"
             />
 
             <div>
               <h2 className="text-yellow-500 text-5xl font-bold">
-                {user.name}
+                {session.user.name}
               </h2>
-              <p className="text-white text-2xl font-semibold">{user.email}</p>
+              <p className="text-white text-2xl font-semibold">
+                {session.user.email}
+              </p>
             </div>
           </div>
         </div>
