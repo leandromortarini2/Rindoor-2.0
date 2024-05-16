@@ -1,14 +1,14 @@
 "use client";
 
-import { CardContainer } from "@/Components/CardContainer/CardContainer";
-import { PriceFilter } from "@/Components/PriceFilter/PriceFilter";
-import { Selector } from "@/Components/Selector/Selector";
-import { SubNav } from "@/Components/SubNav/SubNav";
+import { CardContainer } from "../../components/CardContainer/CardContainer";
+import { PriceFilter } from "../../components/PriceFilter/PriceFilter";
+import { Selector } from "../../components/Selector/Selector";
+import { SubNav } from "../../components/SubNav/SubNav";
 import React, { useEffect, useState } from "react";
 import workCards from "./data";
 import { getWorks } from "../../helpers/helperWorks";
-import { WorksPageSelector } from "@/Components/WorksPageSelector/WorksPageSelector";
-import { wctest } from "@/Components/WorkCard/dataTest";
+import { WorksPageSelector } from "../../components/WorksPageSelector/WorksPageSelector";
+import { wctest } from "../../components/WorkCard/dataTest";
 
 const works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);

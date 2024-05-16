@@ -1,4 +1,4 @@
-import { WorkPageCard } from "@/Components/WorkPageCard/WorkPageCard";
+import { WorkPageCard } from "../../components/WorkPageCard/WorkPageCard";
 import React from "react";
 export const workpage = () => {
   return (
