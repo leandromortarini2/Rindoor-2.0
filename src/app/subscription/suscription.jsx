@@ -2,10 +2,12 @@
 
 import { getSubscription, postSubscription } from '../../helpers/helperSubscription';
 import React, { useEffect, useState } from 'react'
+import Loader from '../../components/Loader/Loader';
 
 export const suscription = () => {
 
   const [plansState, setPlansState] = useState([]);
+  const [LoaderState, setLoaderState] = useState(true)
 
   useEffect(()=>{
     const plansResponse = async () => {
@@ -13,9 +15,13 @@ export const suscription = () => {
         const data = await getSubscription()
         console.log(data)
         setPlansState(data)
+
+        const user = get
       } catch (error) {
         console.log('error al traer los panes', error)
-      } 
+      } finally{
+        setLoaderState(false)
+      }
     }
 
     plansResponse();
@@ -23,7 +29,7 @@ export const suscription = () => {
 
   const handleButton = async (planId) => {
     try {
-      const userId = 'a2d23355-eb4c-4fcd-8cb9-c0aaba337424'
+      const userId = 'e89261d7-7420-4823-99b7-dadef02b5642'
     const dataPost = await postSubscription({planId, userId})
     console.log(dataPost.url);
     const url = dataPost.url
@@ -35,7 +41,8 @@ export const suscription = () => {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 ">
+    <>
+    {LoaderState ? (<Loader/>) : (<div className="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 ">
       <div className='w-full flex flex-col md:flex-row justify-evenly items-center '>
 
         {/* card uno */}
@@ -94,7 +101,9 @@ export const suscription = () => {
 
         {/* card uno */}        
       </div>
-    </div>
+    </div>)}
+    </>
+    
   )
 }
 
