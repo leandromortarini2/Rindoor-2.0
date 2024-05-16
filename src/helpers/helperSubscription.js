@@ -20,3 +20,15 @@ export const postSubscription = async (plan) => {
         console.log(error)        
     }
 }
+
+export const getUser = async () => {
+    try {
+        const response = await axios.get('https://rindoor-backend.onrender.com/users')
+        console.log(response.data)
+
+        
+    } catch (error) {
+        console.log(error)        
+        
+    }
+}
