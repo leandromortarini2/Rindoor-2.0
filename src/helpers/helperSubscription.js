@@ -21,14 +21,12 @@ export const postSubscription = async (plan) => {
     }
 }
 
-export const getUser = async () => {
+export const getUser = async (userId) => {
     try {
-        const response = await axios.get('https://rindoor-backend.onrender.com/users')
+        const response = await axios.get(`https://rindoor-backend.onrender.com/subscriptions/user/${userId}`)
         console.log(response.data)
-
-        
+        return response.data
     } catch (error) {
-        console.log(error)        
-        
+        console.log(error)         
     }
 }
