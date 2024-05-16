@@ -29,3 +29,55 @@ export const validationsNewPost = (input) => {
   }
   return errors;
 };
+
+export const validationsUpdate = (input) => {
+  const errors = {};
+
+  // Validación del nombre
+  if (!input.name) {
+    errors.name = "Debe ingresar un título";
+  } else if (input.name.length < 5) {
+    errors.name = "El título debe tener al menos 5 caracteres";
+  } else if (input.name.length > 30) {
+    errors.name = "El título debe tener un máximo de 10 caracteres";
+  }
+
+  // Validación del email
+  if (!input.email) {
+    errors.email = "Debe ingresar un correo electrónico";
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
+    errors.email = "Debe ingresar un correo electrónico válido";
+  }
+
+  // Validación del teléfono
+  if (!input.phone) {
+    errors.phone = "Debe ingresar un número de teléfono";
+  } else if (!/^\d{10}$/.test(input.phone)) {
+    errors.phone = "El número de teléfono debe tener 10 dígitos";
+  }
+
+  // Validación de la provincia
+  if (!input.province) {
+    errors.province = "Debe seleccionar una provincia";
+  }
+
+  // Validación de la dirección
+  if (!input.address) {
+    errors.address = "Debe ingresar una dirección";
+  }
+
+  // Validación del rol
+  if (!input.role) {
+    errors.role = "Debe seleccionar un tipo de usuario";
+  }
+
+  // Validación de la categoría (si el rol es "professional")
+  if (
+    input.role === "professional" &&
+    (!input.categories || input.categories.length === 0)
+  ) {
+    errors.categories = "Debe seleccionar al menos una categoría";
+  }
+
+  return errors;
+};
