@@ -105,7 +105,7 @@ const CreateJob = () => {
               name="name"
               value={postState.name}
               onChange={handleOnChange}
-              className="w-1/2 h-10 bg-transparent border-b-2  border-yellow-500   mt-3"
+              className="w-3/4  h-10 bg-transparent border-b-2  border-yellow-500  font-semibold  mt-3"
               placeholder="Title..."
             />
             {errorForm && errorForm.name && (
@@ -118,7 +118,7 @@ const CreateJob = () => {
               name="description"
               value={postState.description}
               onChange={handleOnChange}
-              className="w-1/2 h-20 bg-transparent border-b-2  border-yellow-500    mt-3"
+              className="w-3/4  h-20 bg-transparent border-b-2  border-yellow-500 font-semibold   mt-3"
               placeholder="Description..."
             />
             {errorForm && errorForm.description && (
@@ -131,7 +131,7 @@ const CreateJob = () => {
               name="base_price"
               value={postState.base_price}
               onChange={handleOnChange}
-              className="w-1/2 h-10 bg-transparent border-b-2  border-yellow-500 mt-3"
+              className="w-3/4 h-10 bg-transparent border-b-2  border-yellow-500 mt-3 font-semibold"
               placeholder="Base price..."
             />
             {errorForm && errorForm.base_price && (
@@ -144,7 +144,7 @@ const CreateJob = () => {
               name="categoryId"
               value={postState.categoryId}
               onChange={handleOnChange}
-              className="w-3/4 p-2 bg-gray-900 placeholder:text-sm text-sm border-b-2 border-yellow-500"
+              className="w-3/4 p-2 bg-gray-900 placeholder:text-sm text-sm border-b-2 border-yellow-500 font-semibold"
             >
               <option value="">Select Category</option>
               {categories.map((category) => (

@@ -83,11 +83,19 @@ export const NavBar = () => {
         <div className="hidden  w-1/4 h-14 lg:flex justify-evenly items-center">
           {loginIcon === false ? (
             <button onClick={handleLoginIcon}>
-              <Image
-                src={Login}
-                alt=""
-                className="w-8 mr-2 duration-1000 ShadowEffect2 "
-              />
+              {session ? (
+                <img
+                  src={session.user.image}
+                  alt=""
+                  className="w-9 mr-2 duration-1000 ShadowEffect2 rounded-full border-2 border-yellow-500"
+                />
+              ) : (
+                <Image
+                  src={Login}
+                  alt=""
+                  className="w-8 mr-2 duration-1000 ShadowEffect2 "
+                />
+              )}
             </button>
           ) : (
             <button onClick={handleLoginIcon}>
@@ -113,9 +121,16 @@ export const NavBar = () => {
                     Profile
                   </button>
                 </Link>
+                <Link href="/subscription">
+                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Subscription
+                  </button>
+                </Link>
                 <button
-                  onClick={() => {
-                    signOut();
+                  onClick={async () => {
+                    await signOut({
+                      callbackUrl: "/",
+                    });
                   }}
                   className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
                 >
@@ -174,10 +189,16 @@ export const NavBar = () => {
                     Profile
                   </button>
                 </Link>
-
+                <Link href="/subscription">
+                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Subscription
+                  </button>
+                </Link>
                 <button
-                  onClick={() => {
-                    signOut();
+                  onClick={async () => {
+                    await signOut({
+                      callbackUrl: "/",
+                    });
                   }}
                   className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
                 >
