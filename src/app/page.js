@@ -12,8 +12,17 @@ export default function Home() {
     const fetchEmail = async () => {
       if (session?.user?.email) {
         try {
-          const dataUser = await postEmail(session.user.email);
-          console.log("Datos del usuario:", dataUser);
+          const token = await postEmail(session.user.email);
+          localStorage.setItem("Token", token);
+
+          function isTokenExpired(token) {
+            const arrayToken = token.split(".");
+            const tokenPayload = JSON.parse(atob(arrayToken[1]));
+            console.log(tokenPayload);
+
+            return Math.floor(new Date().getTime() / 1000) >= tokenPayload?.sub;
+          }
+          console.log(isTokenExpired(token));
         } catch (error) {
           console.error("Error al obtener el email:", error);
         }
