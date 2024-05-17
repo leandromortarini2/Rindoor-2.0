@@ -13,9 +13,11 @@ export const suscription = () => {
 
   const [userPlan, setUserPlan] = useState()
 
-  const userId = '294b996f-dbe1-4804-92e4-ac60aa2af4bf'
+  
+    const userId = 'e005b75d-7f40-4369-b1cf-d6218e843be4'
 
   useEffect(()=>{
+ 
     const getUserData = async () =>{
       try {
         const user = await getUser(userId)
@@ -50,7 +52,7 @@ export const suscription = () => {
   const handleButton = async (planId) => {
     
     try {
-      const userId = '294b996f-dbe1-4804-92e4-ac60aa2af4bf'
+      const userId = 'e005b75d-7f40-4369-b1cf-d6218e843be4'
       setLoaderState(true)
     const dataPost = await postSubscription({planId, userId})
     console.log('data suscripcion --------->',dataPost.url);
@@ -71,31 +73,25 @@ export const suscription = () => {
     <div className="w-full min-h-screen flex flex-col justify-start items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 ">
       <h1 className='text-gray-900 font-extrabold text-center text-3xl md:text-5xl mt-20 mb-20'>Planes de Suscripcion</h1>
       <div className='w-full flex flex-col md:flex-row justify-evenly items-center '>
-
-        
-
-        {/* card uno */}
-        
-        {
-
-        userPlan ? ( <div className=' w-full md:w-[70%]  flex  items-center shadow-gray-900 shadow-xl   bg-gray-900 rounded-xl mb-20'>
-        <div className='w-full h-auto flex flex-col md:flex-row'>
-          <div className='w-full m:w-1/2'>
+      {
+        userPlan ? ( <div className=' w-full md:w-[60%] h-[550px]  flex  items-center shadow-gray-900 shadow-xl   bg-gray-900 rounded-xl mb-20'>
+        <div className='w-full h-[550px] flex flex-col md:flex-row'>
+          <div className='w-full m:w-1/2 h-[550px]'>
             <img src="https://i.ibb.co/BBj9vvW/aaaaaaa.jpg" alt="" className='w-full h-full md:rounded-l-xl'/>
           </div>
-          <div className='w-full m:w-1/2 flex flex-col justify-evenly items-center'>
-            <h3 className='text-yellow-300 text-lg md:text-xl mt-5'>Estas suscripto al siguiente plan. <br /> La fecha de vencimiento es: ../../....</h3>
+          <div className='w-full m:w-1/2 h-[500px] flex flex-col justify-evenly items-center'>
+            <h3 className='text-yellow-300 text-lg md:text-lg mt-5'>Estas suscripto al siguiente plan. <br /> La fecha de vencimiento es: ../../....</h3>
           
           {
             plansState.map((plan)=>{
               if(plan.id === idPlanState){
                 return(
-                  <div className="w-2/3  p-4 bg-gray-900 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 m-10 " key={plan.id}>
-            <h5 className="mb-4 text-sm sm:text-xl font-medium text-white ">Standard plan</h5>
+                  <div className="w-2/3 h-[400px] p-3 bg-gray-900 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-evenly items-center" key={plan.id}>
+            <h5 className="mb-4 text-sm sm:text-lg font-medium text-white ">Standard plan</h5>
             <div className="flex items-baseline text-yellow-500 ">
               <span className=" text-3xl sm:text-5xl font-extrabold tracking-tight ">{plan.price}</span>
-              <span className=" text-xl sm:text-3xl font-semibold text-yellow-500">{plan.currency}</span>
-              <span className="ms-1 text-lg sm:text-xl font-normal text-white ">/{plan.interval}</span>
+              <span className=" text-xl sm:text-2xl font-semibold text-yellow-500">{plan.currency}</span>
+              <span className="ms-1 text-lg sm:text-lg font-normal text-white ">/{plan.interval}</span>
             </div>
             <ul role="list" className="space-y-5 my-7">
               <li className="flex items-center">
@@ -133,7 +129,7 @@ export const suscription = () => {
               </li>
             </ul>
             
-          </div>
+                  </div>
                 )
               }
             })
@@ -190,13 +186,13 @@ export const suscription = () => {
           </div>
            )
           })
+          
         } 
 
         {/* card uno */}        
       </div>
     </div>)}
     </>
-    
   )
 }
 

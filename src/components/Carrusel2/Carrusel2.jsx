@@ -40,7 +40,7 @@ export const Carrusel2 = () => {
   return (
     <div className="w-full flex flex-col lg:flex-row justify-evenly mt-10 px-4">
       <div className="w-full mb-5  lg:w-5/6 lg:min-h-5 mr-2">
-        <Link href={""}>
+        <Link href='/subscription'>
           <img
             src="https://i.ibb.co/Hr57GQ8/Dise-o-sin-t-tulo-2.png"
             alt=""
