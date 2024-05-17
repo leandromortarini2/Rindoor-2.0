@@ -12,8 +12,8 @@ export default function Home() {
     const fetchEmail = async () => {
       if (session?.user?.email) {
         try {
-          const dataUser = await postEmail(session.user.email);
-          console.log("Datos del usuario:", dataUser);
+          const token = await postEmail(session.user.email);
+          localStorage.setItem("Token", token);
         } catch (error) {
           console.error("Error al obtener el email:", error);
         }

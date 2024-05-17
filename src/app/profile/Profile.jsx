@@ -6,15 +6,16 @@ import PostImg from "../../assets/loudspeaker.svg";
 import chatImg from "../../assets/chat.svg";
 import updateImg from "../../assets/user.svg";
 import subsciptionImg from "../../assets/document.svg";
-import Loader from "../../components/Loader/Loader";
-import { useEffect, useState } from "react";
+import { useAuth } from "../context/Context";
 
 function ProfileClient() {
   const { data: session } = useSession();
 
-  const [LoaderState, setLoaderState] = useState(true);
+  const { dataUser } = useAuth();
+
+  console.log(dataUser);
+
   // console.log(session);
-  console.log(session);
   return (
     session && (
       <>
