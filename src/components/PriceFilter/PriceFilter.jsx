@@ -14,7 +14,7 @@ export const PriceFilter = ({ filterWorksPrice }) => {
     filterWorksPrice(min, max);
   };
   return (
-    <div className=" flex flex-col  bg-gray-900 text-yellow-500 rounded">
+    <div className=" flex flex-col   text-yellow-500 rounded">
       <div className="pb-1">Price Range</div>
       <div className="flex flex-row">
         <div className=" flex pr-1 ">

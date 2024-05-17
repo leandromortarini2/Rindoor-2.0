@@ -7,6 +7,8 @@ import { SubNav } from "../../components/SubNav/SubNav";
 import React, { useEffect, useState } from "react";
 import workCards from "./data";
 import { getWorks } from "../../helpers/helperWorks";
+import { WorksPageSelector } from "../../components/WorksPageSelector/WorksPageSelector";
+import { wctest } from "../../components/WorkCard/dataTest";
 
 const works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);
@@ -54,21 +56,31 @@ const works = () => {
     setWorksData(worksDataOg);
     setParams({});
   };
+  const Pagination = (peich) => {
+    let params1 = params;
+    params1.page = peich;
+    setParams(params1);
+    getWorks(params1)
+      .then((responseData) => {
+        setWorksData(responseData);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300">
       <div>
-        <div className="flex items-center justify-evenly">
+        <div>
           <SubNav
             filterWorksCategory={filterWorksCategory}
             filterWorksPrice={filterWorksPrice}
             resetData={resetData}
           />
-          {/* setWorks1={setWorks1} */}
         </div>
         <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col items-center">
-          <div className="w-3/4 h-full top-0">
-            <CardContainer worksData={worksData} />
+          <div className="lg:w-3/4 h-full top-0  bg-zinc-400 bg-opacity-20 w-full">
+            <CardContainer worksData={wctest} />
+            <WorksPageSelector Pagination={Pagination} />
           </div>
         </div>
       </div>
