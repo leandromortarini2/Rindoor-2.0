@@ -1,10 +1,6 @@
 "use client";
-import { useSession } from "next-auth/react";
 import Carrusel2 from "../components/Carrusel2/Carrusel2";
 import { Categories } from "../components/Categories/Categories";
-import { postEmail } from "../helpers/postSingin";
-import { useEffect } from "react";
-import { decoToken } from "../helpers/decoToken";
 
 export default function Home() {
   return (
