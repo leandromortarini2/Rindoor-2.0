@@ -7,15 +7,15 @@ import chatImg from "../../assets/chat.svg";
 import updateImg from "../../assets/user.svg";
 import subsciptionImg from "../../assets/document.svg";
 import { useAuth } from "../context/Context";
+import { useEffect, useState } from "react";
 
 function ProfileClient() {
   const { data: session } = useSession();
 
-  const { dataUser } = useAuth();
+  const { userData } = useAuth();
 
-  console.log(dataUser);
+  // const [user, setUser] = useState({});
 
-  // console.log(session);
   return (
     session && (
       <>
@@ -33,12 +33,26 @@ function ProfileClient() {
               <p className="text-sm text-white  lg:text-xl font-semibold">
                 {session.user.email}
               </p>
+
+              <p className="text-sm text-white  lg:text-xl font-semibold">
+                {userData?.country}
+              </p>
+              <p className="text-sm text-white  lg:text-xl font-semibold">
+                {userData?.province}
+              </p>
+              {userData?.role === "PROFESSIONAL"
+                ? userData.categories.map((category, index) => {
+                    <div key={index} className="flex justify-evenly">
+                      <span>{category}</span>
+                    </div>;
+                  })
+                : null}
             </div>
           </div>{" "}
           <div className="w-3/4 md:w-1/3 xl:w-1/2 md:min-h-[300px]  md:max-h-[300px] lg:min-h-[400px]  lg:max-h-[400px] xl:min-h-[600px] xl:max-h-[600px]  overflow-hidden flex flex-col  justify-center items-center  bg-gray-800 rounded-b-xl sm:rounded-none  md:rounded-r-2xl mb-5 sm:mb-0 ">
             <div className="w-3/5 rounded-2xl">
               <h2 className=" hidden lg:block lg:text-2xl xl:text-5xl text-gray-900 lg:text-yellow-500 font-bold  capitalize text-center tracking-wid shadow-black">
-                profile cliente
+                profile <span>{userData?.role}</span>
               </h2>
               <h2 className="hidden lg:block lg:text-white lg:text-md xl:text-2xl font-bold mb-5 capitalize text-center">
                 welcome to your panel

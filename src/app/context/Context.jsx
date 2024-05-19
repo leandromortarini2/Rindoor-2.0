@@ -1,47 +1,54 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { postEmail } from "../../helpers/postSingin";
 import { decoToken } from "../../helpers/decoToken";
 
 // Crear el contexto de autenticación
 const AuthContext = createContext({
-  dataUser: {},
-  setdataUser: () => {},
+  userData: null,
+  setUserData: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
-  const [dataUser, setdataUser] = useState({});
+  const [userData, setUserData] = useState(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    const token = localStorage.getItem("Token");
+    const fetchUserData = async () => {
+      if (session?.user?.email) {
+        try {
+          // Enviar el correo electrónico para obtener el token
+          const token = await postEmail(session.user.email);
 
-    if (token) {
-      try {
-        const tokenData = decoToken(token);
-        console.log("Datos decodificados del token en useEffect:", tokenData);
-        setdataUser(tokenData);
-      } catch (error) {
-        console.error("Error decodificando el token:", error);
+          // Decodificar el token para obtener la data del usuario
+          const tokenData = decoToken(token);
+          console.log("Data del token decodificado:", tokenData);
+
+          // Verificar que tokenData sea un objeto válido
+          if (tokenData && typeof tokenData === "object") {
+            setUserData((prevUserData) => {
+              console.log("======================", prevUserData);
+              return tokenData;
+            });
+          } else {
+            console.error("Token data no es un objeto válido:", tokenData);
+          }
+        } catch (error) {
+          console.error("Error al obtener o decodificar el token:", error);
+        }
+      } else {
+        setUserData(null);
       }
-    } else {
-      console.log("No se encontró un token en localStorage");
-    }
-  }, []);
+    };
 
-  useEffect(() => {
-    console.log("Estado actualizado de dataUser:", dataUser);
-  }, [dataUser]);
+    fetchUserData();
+  }, [session]);
 
   return (
-    <AuthContext.Provider value={{ dataUser, setdataUser }}>
+    <AuthContext.Provider value={{ userData, setUserData }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para usar el contexto de autenticación
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth debe ser usado dentro de un AuthProvider");
-  }
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);
