@@ -5,8 +5,8 @@ export const validationsNewPost = (input) => {
   if (!input.name) errors.name = "Debe ingresar un título";
   else if (input.name.length < 5) {
     errors.name = "El título debe tener al menos 5 caracteres";
-  } else if (input.name.length > 10) {
-    errors.name = "El título debe tener un máximo de 10 caracteres";
+  } else if (input.name.length > 30) {
+    errors.name = "El título debe tener un máximo de 30 caracteres";
   }
 
   // // VALIDACION CATEGORY

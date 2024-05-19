@@ -3,16 +3,36 @@ import React, { useState, useEffect } from "react";
 import { validationsNewPost } from "../../helpers/validationsForm";
 import { postNewPublic } from "../../helpers/postNewPost";
 import { getCategory } from "../../helpers/getCategory";
+import Swal from "sweetalert2";
+import { useAuth } from "../context/Context";
 
 const CreateJob = () => {
+  const { userData } = useAuth();
+  const [userId, setUserId] = useState("");
+
+  // Actualizar el userId cada vez que userData cambie
+  useEffect(() => {
+    if (userData) {
+      setUserId(userData.id);
+    }
+  }, [userData]);
+
   const [postState, setPostState] = useState({
     name: "",
     description: "",
     base_price: "",
     categoryId: "",
-    userId: "28428f1d-d1ac-4dfb-918b-f42560b7b34d",
+    userId: "",
     file: null,
   });
+
+  useEffect(() => {
+    // Actualizar userId en postState cuando cambie
+    setPostState((prevState) => ({
+      ...prevState,
+      userId: userId,
+    }));
+  }, [userId]);
 
   const [errorForm, setErrorForm] = useState({
     name: "",
@@ -69,11 +89,23 @@ const CreateJob = () => {
 
     try {
       await postNewPublic(formData);
-      alert("Solicitud POST enviada con éxito");
+
+      Swal.fire({
+        title: "success!",
+        text: "successful publication",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
       window.location.href = "/";
     } catch (error) {
       console.error("Error al enviar la solicitud POST:", error);
-      alert("Ocurrió un error al enviar la solicitud POST");
+      // NEW ALERT
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while submitting the request",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
     }
   };
 

@@ -4,25 +4,9 @@ import Carrusel2 from "../components/Carrusel2/Carrusel2";
 import { Categories } from "../components/Categories/Categories";
 import { postEmail } from "../helpers/postSingin";
 import { useEffect } from "react";
+import { decoToken } from "../helpers/decoToken";
 
 export default function Home() {
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    const fetchEmail = async () => {
-      if (session?.user?.email) {
-        try {
-          const token = await postEmail(session.user.email);
-          localStorage.setItem("Token", token);
-        } catch (error) {
-          console.error("Error al obtener el email:", error);
-        }
-      }
-    };
-
-    fetchEmail();
-  }, [session]);
-
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 ">
       <div className="w-full xl:h-52 flex flex-col items-center justify-center">
