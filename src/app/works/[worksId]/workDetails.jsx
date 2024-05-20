@@ -3,7 +3,7 @@ import { WorkPageCard } from "../../../components/WorkPageCard/WorkPageCard";
 import React, { useEffect, useState } from "react";
 import { getWorkById } from "../../../helpers/helperWorksPage";
 import { Loader } from "../../../components/Loader/Loader";
-export const workpage = ({ params }) => {
+export const workDetails = ({ params }) => {
   const [LoaderState, setLoaderState] = useState(true);
   const [cardData, setCardData] = useState();
   useEffect(() => {
@@ -21,4 +21,4 @@ export const workpage = ({ params }) => {
     </div>
   );
 };
-export default workpage;
+export default workDetails;
