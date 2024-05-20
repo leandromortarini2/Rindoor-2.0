@@ -22,7 +22,6 @@ const works = () => {
         const responseData = await getWorks();
         setWorksData(responseData);
         setWorksDataOg(responseData);
-        console.log("Categorías obtenidas: ", categoryData);
       } catch (error) {
         console.error("Error al obtener las categorías:", error);
       }
