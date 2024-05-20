@@ -12,7 +12,7 @@ export const about = () => {
             className=" w-56 sm:w-64 xl:w-72 ShadowEffect z-0"
           />
         </div>
-        <h3 className="text-center text-gray-900 text-2xl font-bold">
+        <h3 className="text-center text-gray-900 text-2xl font-semibold">
           Your door to reliable solutions.
         </h3>
         <p className="text-center text-gray-900 text-xl m-7 font-semibold ">
