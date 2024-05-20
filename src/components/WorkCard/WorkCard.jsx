@@ -1,10 +1,11 @@
+import Link from "next/link";
 import React from "react";
 
 export const WorkCard = ({ card }) => {
   return (
-    <a
+    <Link
+      href={`/works/${card.id}`}
       key={card.name}
-      href="#"
       className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <img
@@ -21,6 +22,6 @@ export const WorkCard = ({ card }) => {
         <p className="mb-3 font-normal text-yellow-300">{card.category.name}</p>
         <p className="mb-3 font-normal text-yellow-300">{card.base_price}</p>
       </div>
-    </a>
+    </Link>
   );
 };

@@ -1,14 +1,29 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { getCategory } from "../../helpers/getCategory";
 import "./Selector.module.css";
 
 export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
+  const [categories, setCategories] = useState();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    getCategory()
+      .then((responseData) => {
+        setCategories(responseData);
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setOpen] = useState(false);
   const Resetear = () => {
-    console.log("esta entrado bich");
     setSelected("");
     setInputValue("");
     setOpen(false);
@@ -16,13 +31,6 @@ export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
   useImperativeHandle(ref, () => ({
     Resetear,
   }));
-  const categories = [
-    { name: "albañileria" },
-    { name: "Electricidad" },
-    { name: "plomeria" },
-    { name: "techo" },
-    { name: "colocacion" },
-  ];
 
   return (
     <div className="font-medium h-30 md:w-64 relative w-full md:px-0 px-5">
@@ -32,7 +40,9 @@ export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
         }}
         className={`text-yellow-500 w-full p-2 flex items-center justify-between  ${
           open ? "rounded-none" : "rounded-b"
-        } ${!selected && "text-gray-700"}`}
+        } ${!selected && "text-gray-700"} 
+        ${selected ? "hover:cursor-not-allowed" : "hover:cursor-pointer"}
+        `}
       >
         {selected ? selected : "Seleccione oficio"}
         <BiChevronDown size={20} className={`${open && "rotate-180"}`} />
@@ -53,25 +63,29 @@ export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
             className="text-yellow-300 placeholder:text-yellow-300  p-1 outline-none bg-gray-800 "
           />
         </div>
-        {categories.map((category) => (
-          <li
-            key={category.name}
-            className={`text-yellow-500 p-2 text-sm hover:bg-yellow-300 hover:text-black hover:cursor-pointer ${
-              category.name.toLowerCase().startsWith(inputValue)
-                ? "block"
-                : "hidden"
-            }`}
-            onClick={() => {
-              if (category.name.toLowerCase() !== selected.toLowerCase()) {
-                setSelected(category.name);
-                filterWorksCategory(category.name);
-                setOpen(false);
-              }
-            }}
-          >
-            {category.name}
-          </li>
-        ))}
+        {loading ? (
+          <div></div>
+        ) : (
+          categories.map((category) => (
+            <li
+              key={category.name}
+              className={`text-yellow-500 p-2 text-sm hover:bg-yellow-300 hover:text-black hover:cursor-pointer ${
+                category.name.toLowerCase().startsWith(inputValue)
+                  ? "block"
+                  : "hidden"
+              }`}
+              onClick={() => {
+                if (category.name.toLowerCase() !== selected.toLowerCase()) {
+                  setSelected(category.name);
+                  filterWorksCategory(category.name);
+                  setOpen(false);
+                }
+              }}
+            >
+              {category.name}
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );
