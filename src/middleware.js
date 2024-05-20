@@ -1,19 +1,16 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
 import { NextResponse } from "next/server";
-import { postEmail } from "./helpers/postSingin";
-import React from "react";
-import { helperMiddleware } from "./helpers/helperMiddleware";
-let isLoggedIn = true;
+
 const notAllowed = [
-  "http://localhost:3000/profile",
-  "http://localhost:3000/createjob",
-  "http://localhost:3000/subscription",
+  "https://rindoor-2-0.vercel.app/profile",
+  "https://rindoor-2-0.vercel.app/createjob",
+  "https://rindoor-2-0.vercel.app/subscription",
 ];
 
+const isLoggedIn = true;
 const middleware = (request) => {
   if (!isLoggedIn && notAllowed.includes(request.url)) {
-    return NextResponse.redirect("http://localhost:3000/forbidden");
+    return NextResponse.redirect("https://rindoor-2-0.vercel.app/forbidden");
   } else {
     return NextResponse.next();
   }
