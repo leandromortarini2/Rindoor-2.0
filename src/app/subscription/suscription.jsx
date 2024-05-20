@@ -4,6 +4,8 @@ import { cancellSubscription, getSubscription, getUser, postSubscription } from 
 import React, { useEffect, useState } from 'react'
 import Loader from '../../components/Loader/Loader';
 import { useAuth } from "../context/Context";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 export const suscription = () => {
   const { userData } = useAuth();
@@ -28,6 +30,17 @@ export const suscription = () => {
     }
   }, [userData]);
   
+  useEffect(() => {
+    if (!userData) {
+      Swal.fire({
+        title: "Espera!",
+        text: "Antes de subscribirte debes completar tus datos",
+        icon: "info",
+        confirmButtonText: "Completar",
+      });
+      redirect("/update");
+    }
+  });
    
 
   useEffect(()=>{
