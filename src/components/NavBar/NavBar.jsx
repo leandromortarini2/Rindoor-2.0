@@ -29,6 +29,17 @@ export const NavBar = () => {
 
     setLoginIcon(!loginIcon);
   };
+  const handleSignOut = async () => {
+    // Eliminar el token de sessionStorage
+    sessionStorage.removeItem("Token");
+    console.log("Token eliminado de sessionStorage");
+
+    // Esperar un momento antes de redirigir
+    await new Promise((resolve) => setTimeout(resolve, 100)); // Esperar 100ms para asegurar que el token se elimine
+    await signOut({
+      callbackUrl: "/",
+    });
+  };
 
   return (
     <>
@@ -195,11 +206,7 @@ export const NavBar = () => {
                   </button>
                 </Link>
                 <button
-                  onClick={async () => {
-                    await signOut({
-                      callbackUrl: "/",
-                    });
-                  }}
+                  onClick={handleSignOut}
                   className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
                 >
                   Logout

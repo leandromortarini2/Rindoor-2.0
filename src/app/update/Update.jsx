@@ -6,13 +6,14 @@ import { getCategory } from "../../helpers/getCategory";
 import arrayProvincias from "./provincias";
 import Loader from "../../components/Loader/Loader";
 import { validationsUpdate } from "../../helpers/validationsForm";
+import Swal from "sweetalert2";
 
 const Update = () => {
-  const { data: session } = useSession();
-
   const [categories, setCategories] = useState([]);
 
   const [LoaderState, setLoaderState] = useState(true);
+
+  const { data: session } = useSession();
 
   const [user, setUser] = useState({
     name: session?.user?.name || "",
@@ -74,11 +75,22 @@ const Update = () => {
 
     try {
       await postRegister(user);
-      alert("Registro exitoso");
+      Swal.fire({
+        title: "success!",
+        text: "data updated successfully",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+
       window.location.href = "/";
     } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "An error occurred while submitting the request",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
       console.error("Error al enviar la solicitud POST:", error);
-      alert("Ocurrió un error al enviar la solicitud POST");
     }
   };
 

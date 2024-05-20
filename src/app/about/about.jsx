@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export const about = () => {
@@ -25,7 +26,8 @@ export const about = () => {
         </p>
       </div>
 
-      <div className="w-3/4 bg-gray-900 h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl">
+
+      <div className="w-3/4 bg-gray-900 h-[450px] md:h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl shadow-gray-900 shadow-xl">
         <h3 className="text-center text-yellow-300 text-2xl p-2 font-semibold">
           Client
         </h3>
@@ -37,11 +39,11 @@ export const about = () => {
           the door to reliable solutions with Rin|Door!
         </p>
         <div className="w-full flex justify-center">
-        <button type="button" className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-1/5 text-center" >Registrarme</button>
+        <button type="button" className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-[100px] md:w-[150px] text-center" >Registrarme</button>
         </div>
-      </div>
+      </div> 
 
-      <div className="w-3/4 bg-gray-900 h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl">
+      <div className="w-3/4 bg-gray-900 h-[450px] md:h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl shadow-gray-900 shadow-lg">
         <h3 className="text-center text-yellow-300 text-2xl p-2 font-semibold">
           Professional
         </h3>
@@ -53,7 +55,10 @@ export const about = () => {
           success with us!
         </p>
         <div className="w-full flex justify-center">
-        <button type="button" className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-1/5 text-center" >Subscribe</button>
+          <Link href='/home'>
+          <button type="button" className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-[100px] md:w-[150px] text-center" >Subscribe</button>
+          </Link>
+            
         </div>
       </div>
     </div>
