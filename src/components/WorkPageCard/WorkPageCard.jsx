@@ -3,11 +3,11 @@ import { FaLocationDot } from "react-icons/fa6";
 export const WorkPageCard = ({ cardData }) => {
   console.log(cardData);
   const date = new Date(cardData.created_at);
-  const formattedDate = date.toLocaleDateString("es-ES", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formattedDate = {
+    year: "2024",
+    month: "mayo ",
+    day: "19 de ",
+  };
 
   return (
     <div className="bg-gray-800  min-h-screen w-4/5 my-5 rounded-2xl">
