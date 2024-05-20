@@ -15,69 +15,96 @@ const works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);
   const [worksData, setWorksData] = useState([]);
   const [params, setParams] = useState({});
+
   useEffect(() => {
-    getWorks()
-      .then((responseData) => {
-        console.log(responseData);
+    const fetchWorks = async () => {
+      try {
+        const responseData = await getWorks();
         setWorksData(responseData);
         setWorksDataOg(responseData);
-      })
-      .catch((error) => console.error(error));
-    setLoaderState(false);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoaderState(false);
+    };
+
+    fetchWorks();
   }, []);
   // const setWorks1 = () => {
   //   setWorksData(worksDataOg);
   // };
 
   const filterWorksCategory = (cate) => {
+    const fetchWorks1 = async (params) => {
+      try {
+        const responseData = await getWorks(params);
+        setWorksData(responseData);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoaderState(false);
+    };
     let params1 = params;
     params1.categories = cate;
     setParams(params1);
-    getWorks(params1)
-      .then((responseData) => {
-        console.log(responseData);
-        setWorksData(responseData);
-      })
-      .catch((error) => console.error(error));
+    fetchWorks1(params1);
   };
   const filterWorksPrice = (min = 0, max = 99999999) => {
+    const fetchWorks2 = async (params) => {
+      try {
+        const responseData = await getWorks(params);
+        setWorksData(responseData);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoaderState(false);
+    };
     let params1 = params;
     params1.minPrice = min;
     params1.maxPrice = max;
     setParams(params1);
     console.log(params1);
-    getWorks(params1)
-      .then((responseData) => {
-        console.log(responseData);
-        setWorksData(responseData);
-      })
-      .catch((error) => console.error(error));
+    fetchWorks2(params1);
   };
   const resetData = () => {
     setWorksData(worksDataOg);
     setParams({});
   };
   const Pagination = (peich) => {
+    const fetchWorks3 = async (params) => {
+      try {
+        const responseData = await getWorks(params);
+        setWorksData(responseData);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoaderState(false);
+    };
     let params1 = params;
     params1.page = peich;
     setParams(params1);
-    getWorks(params1)
-      .then((responseData) => {
-        setWorksData(responseData);
-      })
-      .catch((error) => console.error(error));
+    fetchWorks3(params1);
   };
 
   const sortWorks = (sort) => {
+    const fetchWorks4 = async (params) => {
+      try {
+        const responseData = await getWorks(params);
+        setWorksData(responseData);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoaderState(false);
+    };
     let params1 = params;
     params1[`${sort.key}`] = sort.value;
     setParams(params1);
-    getWorks(params1)
-      .then((responseData) => {
-        console.log(responseData);
-        setWorksData(responseData);
-      })
-      .catch((error) => console.error(error));
+    fetchWorks4(params);
   };
 
   return (

@@ -13,12 +13,18 @@ export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
   const [categories, setCategories] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    getCategory()
-      .then((responseData) => {
-        setCategories(responseData);
-        setLoading(false);
-      })
-      .catch((error) => console.error(error));
+    const fetchCategory = async () => {
+      try {
+        const categoryData = await getCategory();
+        setCategories(categoryData);
+        console.log("Categorías obtenidas: ", categoryData);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchCategory();
   }, []);
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
