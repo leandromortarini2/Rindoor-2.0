@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { WorkCard } from "../WorkCard/WorkCard";
 
 export const CardContainer = ({ worksData }) => {
