@@ -1,11 +1,10 @@
 import axios from "axios";
 const URL = "https://rindoor-backend.onrender.com/jobs";
 
-export async function getWorks(params) {
+export async function getWorkById(id) {
   try {
     console.log(URL);
-    console.log(params);
-    const response = await axios.get(URL, { params });
+    const response = await axios.get(`${URL}/${id}`);
 
     return response.data;
   } catch (error) {

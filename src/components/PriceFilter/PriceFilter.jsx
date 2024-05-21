@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 export const PriceFilter = ({ filterWorksPrice }) => {
   const [min, setMin] = useState(0);
+  const [on, setOn] = useState(false);
   const [max, setMax] = useState(9999999);
+
+  const show = 0;
 
   const handleMin = (event) => {
     setMin(event.target.value);
   };
   const handleMax = (event) => {
+    !on ? setOn(true) : "";
     setMax(event.target.value);
   };
   const handleClick = () => {
@@ -31,7 +35,7 @@ export const PriceFilter = ({ filterWorksPrice }) => {
           <span className=" w-10 ">Max</span>
           <input
             type="number"
-            value={max}
+            value={on ? max : show}
             onChange={handleMax}
             className="w-20 bg-gray-700"
           />
