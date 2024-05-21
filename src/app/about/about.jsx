@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 
 export const about = () => {
-  const intento = "hola";
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex justify-evenly flex-col items-center">
       <div className="w-full min-h-screen sm:w-3/4 sm:min-h-[300px]">
