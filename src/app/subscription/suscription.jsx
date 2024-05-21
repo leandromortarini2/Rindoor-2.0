@@ -33,8 +33,8 @@ export const suscription = () => {
   useEffect(() => {
     if (!userData) {
       Swal.fire({
-        title: "Espera!",
-        text: "Antes de subscribirte debes completar tus datos",
+        title: "Espera!!",
+        text: "Antes de poder subscribirte debes completar tus datos",
         icon: "info",
         confirmButtonText: "Completar",
       });
