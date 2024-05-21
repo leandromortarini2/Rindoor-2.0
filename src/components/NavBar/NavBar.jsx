@@ -8,8 +8,13 @@ import { useState } from "react";
 import BurgerImg from "../../assets/burger.svg";
 import Link from "next/link";
 import { signIn, useSession, signOut } from "next-auth/react";
+import { useAuth } from "../../app/context/Context";
+import { redirect } from "next/navigation";
+import Swal from "sweetalert2";
 
 export const NavBar = () => {
+  const { userData } = useAuth();
+
   const [loginIcon, setLoginIcon] = useState(false);
 
   const { data: session } = useSession();
@@ -83,7 +88,6 @@ export const NavBar = () => {
               About
             </button>
           </Link>
-
           <Link href="/createjob">
             <button className="xl:text-xl text-yellow-500 font-semibold duration-1000 hover:text-yellow-300 hover:scale-110">
               Create job
@@ -132,11 +136,13 @@ export const NavBar = () => {
                     Profile
                   </button>
                 </Link>
+
                 <Link href="/subscription">
                   <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Subscription
                   </button>
                 </Link>
+
                 <button
                   onClick={async () => {
                     await signOut({

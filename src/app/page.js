@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import Carrusel2 from "../components/Carrusel2/Carrusel2";
 import { Categories } from "../components/Categories/Categories";
 
