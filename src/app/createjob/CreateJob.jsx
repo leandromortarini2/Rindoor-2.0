@@ -101,7 +101,7 @@ const CreateJob = () => {
     formData.append("file", postState.file);
 
     try {
-      await postNewPublic(formData);
+      const datapost = await postNewPublic(formData);
 
       Swal.fire({
         title: "success!",

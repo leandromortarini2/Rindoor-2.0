@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {string | number | null} input  es el dato que llega desde los formularios.
+ * @returns
+ */
+
 export const validationsNewPost = (input) => {
   const errors = {};
 
