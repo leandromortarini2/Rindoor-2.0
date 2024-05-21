@@ -20,7 +20,7 @@ const works = () => {
   useEffect(() => {
     getWorks()
       .then((responseData) => {
-        console.log(responseData);
+        console.log("useEffect" + responseData + "useEffect");
         setWorksData(responseData);
         setWorksDataOg(responseData);
       })
@@ -37,7 +37,9 @@ const works = () => {
     setParams(params1);
     getWorks(params1)
       .then((responseData) => {
-        console.log(responseData);
+        console.log(
+          "filterWorksCategory" + responseData + "filterWorksCategory"
+        );
         setWorksData(responseData);
       })
       .catch((error) => console.error(error));
@@ -82,7 +84,7 @@ const works = () => {
         </div>
         <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col items-center">
           <div className="lg:w-3/4 h-full top-0  bg-zinc-400 bg-opacity-20 w-full">
-            {LoaderState ? <Loader /> : <div>HolaMundo</div>}
+            {LoaderState ? <Loader /> : <CardContainer worksData={worksData} />}
           </div>
         </div>
       </div>
