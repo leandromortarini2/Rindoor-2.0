@@ -32,7 +32,7 @@ export const suscription = () => {
       });
       redirect("/update");
     }
-  });
+  }, [userData]);
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
@@ -101,7 +101,8 @@ export const suscription = () => {
   const handleCancellButton = async () => {
     try {
       setLoaderState(true)
-      const id= 'e0a7c226-2d0c-49ad-965a-d76f73680f99'
+      const id= userIdContext.id
+      console.log(id, 'id<<<<<<<<<<<<<<<<<----------')
       const data = await cancellSubscription(id)
       console.log('data cancelled suscripcion', data)
       window.location.href = '/subscription'
