@@ -84,15 +84,7 @@ const works = () => {
         </div>
         <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col items-center">
           <div className="lg:w-3/4 h-full top-0  bg-zinc-400 bg-opacity-20 w-full">
-            {LoaderState ? (
-              <Loader />
-            ) : (
-              <div>
-                {worksData.map((work, index) => (
-                  <div key={index}>{work.id} </div>
-                ))}
-              </div>
-            )}
+            {LoaderState ? <Loader /> : <CardContainer worksData={worksData} />}
           </div>
         </div>
       </div>
