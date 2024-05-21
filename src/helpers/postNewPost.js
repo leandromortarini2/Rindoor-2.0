@@ -1,6 +1,11 @@
 import axios from "axios";
 
 const JOBS_URL = process.env.NEXT_PUBLIC_API_URL_JOBS;
+/**
+ * Esta funcion envia los datos del trabajo al backend.
+ * @param {object} State recibe el estado, del formulario createJob.
+ *
+ */
 
 export const postNewPublic = async (State) => {
   try {

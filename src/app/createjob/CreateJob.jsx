@@ -5,6 +5,7 @@ import { postNewPublic } from "../../helpers/postNewPost";
 import { getCategory } from "../../helpers/getCategory";
 import Swal from "sweetalert2";
 import { useAuth } from "../context/Context";
+import { redirect } from "next/navigation";
 
 const CreateJob = () => {
   const { userData } = useAuth();
@@ -24,6 +25,18 @@ const CreateJob = () => {
     categoryId: "",
     userId: "",
     file: null,
+  });
+
+  useEffect(() => {
+    if (!userData) {
+      Swal.fire({
+        title: "Espera!",
+        text: "Para crear una publicacion debes completar tus datos",
+        icon: "info",
+        confirmButtonText: "Completar",
+      });
+      redirect("/update");
+    }
   });
 
   useEffect(() => {
@@ -88,7 +101,7 @@ const CreateJob = () => {
     formData.append("file", postState.file);
 
     try {
-      await postNewPublic(formData);
+      const datapost = await postNewPublic(formData);
 
       Swal.fire({
         title: "success!",
