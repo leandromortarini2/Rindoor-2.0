@@ -18,7 +18,7 @@ export const WorkCard = ({ card }) => {
           {card.name}
         </h5>
         <p className="mb-3 font-normal text-yellow-300">{card.user.name}</p>
-        <p className="mb-3 font-normal text-yellow-300">{card.created_at}</p>
+        <p className="mb-3 font-normal text-yellow-300">{card?.created_at}</p>
         <p className="mb-3 font-normal text-yellow-300">{card.category.name}</p>
         <p className="mb-3 font-normal text-yellow-300">{card.base_price}</p>
       </div>
