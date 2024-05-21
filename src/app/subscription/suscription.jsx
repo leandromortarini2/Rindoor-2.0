@@ -31,35 +31,22 @@ export const suscription = () => {
   const [LoaderState, setLoaderState] = useState(true)
 >>>>>>> 57bcbbbfd21f057756dbbd3de80e8dbd59ee7d7b
 
-  const [idPlanState, setIdPlanState] = useState();
+  const [idPlanState, setIdPlanState] = useState()
 
-<<<<<<< HEAD
-  const [userPlan, setUserPlan] = useState();
-
-  const userId = "e005b75d-7f40-4369-b1cf-d6218e843be4";
-
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const user = await getUser(userId);
-        console.log("useeeeeeer ------------>", user.data[0].plan.active);
-        console.log(
-          "useeeeeeer2222222222222 ------------>",
-          user.data[0].plan.id
-        );
-        setUserPlan(user);
-        setIdPlanState(user.data[0].plan.id);
-        return user;
-      } catch (error) {
-        console.log("error al traer los datos del usuario", error);
-      }
-    };
-    getUserData();
-  }, []);
-=======
-  console.log('--------------> userIdContext', userIdContext)
+  // console.log('--------------> userIdContext', userIdContext)
 
   // const [userPlan, setUserPlan] = useState()
+  useEffect(() => {
+    if (!userData) {
+      Swal.fire({
+        title: "Espera!",
+        text: "Antes de poder subscribirte debes completar tus datos",
+        icon: "info",
+        confirmButtonText: "Completar",
+      });
+      redirect("/update");
+    }
+  });
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
@@ -68,17 +55,7 @@ export const suscription = () => {
     }
   }, [userData]);
   
-  useEffect(() => {
-    if (!userData) {
-      Swal.fire({
-        title: "Espera!",
-        text: "Antes de subscribirte debes completar tus datos",
-        icon: "info",
-        confirmButtonText: "Completar",
-      });
-      redirect("/update");
-    }
-  });
+ 
    
 
   useEffect(()=>{
@@ -94,7 +71,7 @@ export const suscription = () => {
           return user;
         }
         catch (error) {
-          console.log('error al traer los datos del usuario', error)
+          console.log('error  los datos del usuario', error)
         }
        }
       
