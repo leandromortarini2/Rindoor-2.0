@@ -19,9 +19,20 @@ export const suscription = () => {
 
   const [idPlanState, setIdPlanState] = useState()
 
-  console.log('--------------> userIdContext', userIdContext)
+  // console.log('--------------> userIdContext', userIdContext)
 
   // const [userPlan, setUserPlan] = useState()
+  useEffect(() => {
+    if (!userData) {
+      Swal.fire({
+        title: "Espera!",
+        text: "Antes de poder subscribirte debes completar tus datos",
+        icon: "info",
+        confirmButtonText: "Completar",
+      });
+      redirect("/update");
+    }
+  });
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
@@ -30,17 +41,7 @@ export const suscription = () => {
     }
   }, [userData]);
   
-  useEffect(() => {
-    if (!userData) {
-      Swal.fire({
-        title: "Espera!",
-        text: "Antes de subscribirte debes completar tus datos",
-        icon: "info",
-        confirmButtonText: "Completar",
-      });
-      redirect("/update");
-    }
-  });
+ 
    
 
   useEffect(()=>{
@@ -56,7 +57,7 @@ export const suscription = () => {
           return user;
         }
         catch (error) {
-          console.log('error al traer los datos del usuario', error)
+          console.log('error  los datos del usuario', error)
         }
        }
       
