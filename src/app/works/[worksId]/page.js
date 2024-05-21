@@ -16,7 +16,7 @@ export default function page({ params }) {
   }, []);
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex justify-evenly flex-col items-center">
-      {LoaderState ? <Loader /> : <div> {cardData.created_at} </div>}
+      {LoaderState ? <Loader /> : <WorkPageCard cardData={cardData} />}
     </div>
   );
 }
