@@ -1,5 +1,4 @@
 "use client";
-
 import { CardContainer } from "../../components/CardContainer/CardContainer";
 import { PriceFilter } from "../../components/PriceFilter/PriceFilter";
 import { Selector } from "../../components/Selector/Selector";
@@ -20,6 +19,7 @@ const works = () => {
     const fetchWorks = async () => {
       try {
         const responseData = await getWorks();
+        console.log(responseData);
         setWorksData(responseData);
         setWorksDataOg(responseData);
       } catch (error) {
