@@ -143,6 +143,11 @@ export const NavBar = () => {
                   </button>
                 </Link>
 
+                <Link href="/admin">
+                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Admin
+                  </button>
+                </Link>
                 <button
                   onClick={async () => {
                     await signOut({
@@ -209,6 +214,11 @@ export const NavBar = () => {
                 <Link href="/subscription">
                   <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Subscription
+                  </button>
+                </Link>
+                <Link href="/admin">
+                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Admin
                   </button>
                 </Link>
                 <button
