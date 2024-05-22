@@ -14,7 +14,11 @@ export const PriceFilter = ({ filterWorksPrice }) => {
     setMax(event.target.value);
   };
   const handleClick = () => {
-    filterWorksPrice(min, max);
+    if (max > min) {
+      filterWorksPrice(min, max);
+    } else {
+      filterWorksPrice(max, min);
+    }
   };
   return (
     <div className=" flex flex-col   text-yellow-500 rounded">
