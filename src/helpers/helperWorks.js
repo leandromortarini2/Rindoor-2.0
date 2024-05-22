@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = "https://rindoor-backend.onrender.com/jobs";
+const URL = process.env.NEXT_PUBLIC_API_URL_JOBS;
 
 export async function getWorks(params) {
   try {
