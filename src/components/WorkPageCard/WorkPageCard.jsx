@@ -1,8 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 export const WorkPageCard = ({ cardData }) => {
-  console.log(cardData);
+  let data = {
+    message: "",
+    offered_price: 0,
+  };
+  const [formData, setFormData] = useState(data);
+  const [errors, setErrors] = useState(data);
+
   const formatearFecha = (fecha) => {
     const fecha1 = new Date(fecha);
     const opciones = {
@@ -13,6 +19,35 @@ export const WorkPageCard = ({ cardData }) => {
     return fecha1.toLocaleString("es", opciones);
   };
   const formattedDate = formatearFecha(cardData?.created_at);
+
+  const validate = (data1) => {
+    let errorsObj = {};
+    if (!data1.message) {
+      errorsObj.message = "inserte un mensaje";
+    }
+    if (!data1.offered_price) {
+      errorsObj.offered_price = "inserte un presupuesto estimado";
+    }
+    return errorsObj;
+  };
+
+  const handleChange = (event) => {
+    const { value, name } = event.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors(validate({ ...formData, [name]: value }));
+  };
+
+  const handleClick = () => {
+    if (Object.keys(errors).some((e) => !errors[e])) {
+      console.log(errors);
+      console.log(Object.keys(errors).some((e) => !errors[e]));
+      console.log("mensaje enviado exitosamente");
+    } else {
+      console.log(errors);
+      console.log(Object.keys(errors).some((e) => !errors[e]));
+      console.log("por ahi no, maquina");
+    }
+  };
 
   return (
     <div className="bg-gray-800  min-h-screen w-4/5 my-5 rounded-2xl">
@@ -74,9 +109,11 @@ export const WorkPageCard = ({ cardData }) => {
                   <label className="text-yellow-500">Mensaje</label>
                   <input
                     type="text"
-                    name="presupuesto"
+                    name="message"
                     className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full  "
                     placeholder="Mensaje..."
+                    value={formData.message}
+                    onChange={handleChange}
                   />
                 </div>
                 <div className="md:col-span-5">
@@ -85,7 +122,9 @@ export const WorkPageCard = ({ cardData }) => {
                     inputMode="numeric"
                     pattern="[0-9]*"
                     type="number"
-                    name="full_name"
+                    name="offered_price"
+                    value={formData.offered_price}
+                    onChange={handleChange}
                     id="full_name"
                     className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full "
                     placeholder="00.0"
@@ -94,7 +133,10 @@ export const WorkPageCard = ({ cardData }) => {
 
                 <div className="md:col-span-5 text-right">
                   <div className="inline-flex items-end">
-                    <button className="bg-yellow-300 text-gray-900 hover:bg-gray-700 hover:text-yellow-500 font-bold py-2 px-4 rounded">
+                    <button
+                      onClick={() => handleClick()}
+                      className="bg-yellow-300 text-gray-900 hover:bg-gray-700 hover:text-yellow-500 font-bold py-2 px-4 rounded"
+                    >
                       Submit
                     </button>
                   </div>
