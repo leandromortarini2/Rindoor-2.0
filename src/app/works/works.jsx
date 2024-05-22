@@ -71,6 +71,17 @@ const works = () => {
       })
       .catch((error) => console.error(error));
   };
+  const sortWorks = (sort) => {
+    let params1 = params;
+    params1[`${sort.key}`] = sort.value;
+    console.log(params1);
+    setParams(params1);
+    getWorks(params1)
+      .then((responseData) => {
+        setWorksData(responseData);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300">
@@ -80,6 +91,7 @@ const works = () => {
             filterWorksCategory={filterWorksCategory}
             filterWorksPrice={filterWorksPrice}
             resetData={resetData}
+            sortWorks={sortWorks}
           />
         </div>
         <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col items-center">
