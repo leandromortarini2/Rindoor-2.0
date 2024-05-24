@@ -13,6 +13,7 @@ const CreateJob = () => {
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
+    console.log(userData);
     if (userData) {
       setUserId(userData.id);
     }
@@ -28,6 +29,10 @@ const CreateJob = () => {
   });
 
   useEffect(() => {
+    // if (userData.isActive === false) {
+    //   console.log(userData.isActive);
+    // }
+
     if (!userData) {
       Swal.fire({
         title: "Espera!",
