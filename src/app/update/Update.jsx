@@ -21,6 +21,7 @@ const Update = () => {
     phone: "",
     country: "Argentina",
     province: "",
+    city: "",
     address: "",
     role: "",
     categories: [],
@@ -82,7 +83,7 @@ const Update = () => {
         confirmButtonText: "Cool",
       });
 
-      window.location.href = "/";
+      // window.location.href = "/";
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -214,6 +215,21 @@ const Update = () => {
                 )}
                 {/* INPUT 5 */}
                 {/* INPUT 5 */}
+                <input
+                  type="text"
+                  name="city"
+                  value={user.city}
+                  placeholder="city..."
+                  onChange={handleChange}
+                  className="text-white font-semibold w-full border-b-2 border-yellow-500 bg-transparent m-2"
+                />
+                {errorForm && errorForm.address && (
+                  <p className="text-yellow-700  text-md text-center ">
+                    {errorForm.address}
+                  </p>
+                )}
+                {/* INPUT 6 */}
+                {/* INPUT 6 */}
                 <input
                   type="text"
                   name="address"

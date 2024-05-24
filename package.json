@@ -13,6 +13,7 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.18",
+    "@react-google-maps/api": "^2.19.3",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "jwt-decode": "^4.0.0",

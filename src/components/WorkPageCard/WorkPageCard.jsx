@@ -72,7 +72,7 @@ export const WorkPageCard = ({ cardData }) => {
               </h2>
             </div>
             <div className="ASDSAD lg:flex-none lg:flex md:flex md:flex-row lg:flex-col w-full">
-              <div className="lg:w-auto lg:w-auto w-1/2 ">
+              <div className="lg:w-auto w-1/2 ">
                 <h3 className="my-5 text-2xl text-yellow-300">
                   {cardData?.user?.name}
                 </h3>
