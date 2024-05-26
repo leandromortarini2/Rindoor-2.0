@@ -51,7 +51,8 @@ const Users = () => {
         <h2 className="text-3xl text-gray-900 font-bold text-center capitalize">
           Usuarios
         </h2>
-      </div>
+      </div>{" "}
+      <PaginacionUsers Pagination={handlePagination} />
       <div className="w-full flex flex-wrap items-center justify-center">
         {users?.length > 0 ? (
           users.map((user) => (
@@ -97,6 +98,9 @@ const Users = () => {
                 ) : (
                   <span className="text-white">true</span>
                 )}
+              </p>
+              <p className="text-lg text-gray-500 font-semibold capitalize">
+                ID user: <span className="text-white">{user.id}</span>
               </p>
               <p className="text-lg text-gray-500 font-semibold capitalize">
                 ID Plan: <span className="text-white">{user.planId}</span>
