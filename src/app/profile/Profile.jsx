@@ -92,7 +92,7 @@ function ProfileClient() {
             <div className="w-full xl:w-3/4 flex flex-wrap justify-center xl:max-w-[500px]">
               <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
                 <p className="mb-2 text-xs lg:text-lg xl:text-xl">my posts</p>
-                <Link href="">
+                <Link href="/myposts">
                   <Image src={PostImg} alt="" className="w-8 lg:w-12 xl:w-16" />
                 </Link>
               </div>
