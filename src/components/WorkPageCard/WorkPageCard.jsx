@@ -1,13 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
+import Swal from "sweetalert2";
 export const WorkPageCard = ({ cardData }) => {
   let data = {
     message: "",
     offered_price: 0,
   };
+  let dataErrors = {
+    message: "",
+    offered_price: "",
+  };
   const [formData, setFormData] = useState(data);
-  const [errors, setErrors] = useState(data);
+  const [errors, setErrors] = useState(dataErrors);
 
   const formatearFecha = (fecha) => {
     const fecha1 = new Date(fecha);
@@ -23,10 +28,12 @@ export const WorkPageCard = ({ cardData }) => {
   const validate = (data1) => {
     let errorsObj = {};
     if (!data1.message) {
-      errorsObj.message = "inserte un mensaje";
+      errorsObj.message = "**Inserte un mensaje**";
     }
     if (!data1.offered_price) {
-      errorsObj.offered_price = "inserte un presupuesto estimado";
+      errorsObj.offered_price = "**Inserte un presupuesto estimado**";
+    } else if (isNaN(parseFloat(data1.offered_price))) {
+      errorsObj.offered_price = "**Solo se permiten numeros**";
     }
     return errorsObj;
   };
@@ -37,15 +44,34 @@ export const WorkPageCard = ({ cardData }) => {
     setErrors(validate({ ...formData, [name]: value }));
   };
 
-  const handleClick = () => {
-    if (Object.keys(errors).some((e) => !errors[e])) {
-      console.log(errors);
-      console.log(Object.keys(errors).some((e) => !errors[e]));
-      console.log("mensaje enviado exitosamente");
+  const handleClick = () => {};
+
+  const handleClick1 = async () => {
+    if (Object.keys(errors).length === 0) {
+      const formData = new FormData();
+      formData.append("message", formData.message);
+      formData.append("offered_price", formData.offered_price);
+      formData.append("userId", "nosetodavia");
+      formData.append("jobId", cardData.id);
+      try {
+        Swal.fire({
+          title: "Exito",
+          text: "Te has postulado exitosamente",
+          icon: "success",
+          confirmButtonText: "Genial!",
+        });
+        setFormData(data);
+        setErrors(dataErrors);
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Hubo un problema con la postulacion, intentalo de nuevo!",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+      }
     } else {
       console.log(errors);
-      console.log(Object.keys(errors).some((e) => !errors[e]));
-      console.log("por ahi no, maquina");
     }
   };
 
@@ -86,7 +112,7 @@ export const WorkPageCard = ({ cardData }) => {
                   <h3 className="ml-5 mr-10 text-2xl">Zárate , Buenos Aires</h3>
                 </div>
                 <h3 className="my-5 text-3xl text-yellow-300">
-                  Presupuesto :{cardData?.base_price}
+                  Presupuesto:{cardData?.base_price}
                 </h3>
               </div>
             </div>
@@ -115,6 +141,7 @@ export const WorkPageCard = ({ cardData }) => {
                     value={formData.message}
                     onChange={handleChange}
                   />
+                  <p className="text-yellow-500 italic">{errors.message}</p>
                 </div>
                 <div className="md:col-span-5">
                   <label className="text-yellow-500">Presupuesto</label>
@@ -129,6 +156,9 @@ export const WorkPageCard = ({ cardData }) => {
                     className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full "
                     placeholder="00.0"
                   />
+                  <p className="text-yellow-500 italic">
+                    {errors.offered_price}
+                  </p>
                 </div>
 
                 <div className="md:col-span-5 text-right">

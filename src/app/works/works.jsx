@@ -98,6 +98,7 @@ const works = () => {
           <div className="lg:w-3/4 h-full top-0  bg-zinc-400 bg-opacity-20 w-full">
             {LoaderState ? <Loader /> : <CardContainer worksData={worksData} />}
           </div>
+          <WorksPageSelector Pagination={Pagination} />
         </div>
       </div>
     </div>
