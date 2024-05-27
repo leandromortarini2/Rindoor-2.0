@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import PostImg from "../../assets/loudspeaker.svg";
 import chatImg from "../../assets/chat.svg";
-import updateImg from "../../assets/user.svg";
+import adminImg from "../../assets/manager.svg";
 import subsciptionImg from "../../assets/document.svg";
 import { useAuth } from "../context/Context";
 import { useEffect, useState } from "react";
@@ -116,6 +116,20 @@ function ProfileClient() {
                   </span>
                 </Link>
               </div>
+              {userData?.role === "ADMIN" ? (
+                <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
+                  <p className="mb-2 text-xs lg:text-lg xl:text-xl">Admin</p>
+                  <Link href="/admin">
+                    <span>
+                      <Image
+                        src={adminImg}
+                        alt=""
+                        className="w-10 lg:w-14 xl:w-20"
+                      />
+                    </span>
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
