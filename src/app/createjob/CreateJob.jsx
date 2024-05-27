@@ -14,6 +14,16 @@ const CreateJob = () => {
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
+    if (userData === "ban") {
+      Swal.fire({
+        title: "Usuario Banneado!",
+        text: "Tu cuenta ha sido suspendida temporalmente debido a actividades que infringen nuestras políticas. Por favor, contáctanos para obtener más información y resolver esta situación lo antes posible.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      redirect("/");
+    }
+
     if (userData) {
       setUserId(userData.id);
     }
