@@ -9,6 +9,8 @@ import subsciptionImg from "../../assets/document.svg";
 import { useAuth } from "../context/Context";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../helpers/getCategory";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 function ProfileClient() {
   const { data: session } = useSession();
@@ -16,6 +18,16 @@ function ProfileClient() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    if (userData === "ban") {
+      Swal.fire({
+        title: "Usuario Banneado!",
+        text: "Tu cuenta ha sido suspendida temporalmente debido a actividades que infringen nuestras políticas. Por favor, contáctanos para obtener más información y resolver esta situación lo antes posible.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      redirect("/");
+    }
+
     const fetchCategory = async () => {
       try {
         const categoryData = await getCategory();
