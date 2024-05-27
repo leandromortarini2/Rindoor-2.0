@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { getJobIdMyPosts, getJobsMyPosts } from '../../helpers/helperApplicants'
+import { getJobIdMyPosts, getJobsMyPosts, putJobFinish } from '../../helpers/helperApplicants'
 import Loader from '../../components/Loader/Loader'
 import { useAuth } from '../context/Context'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ export const myposts = () => {
   const [userDataState, setUserDataState] = useState(null)
   const [loaderState, setLoaderState] = useState(true)
   const [jobState, setJobState] = useState([])
-  console.log(jobState, '------>>>>jobState')
+  // console.log(jobState, '------>>>>jobState')
   const [jobStateProffesional, setJobStateProffesional] = useState({ postulante: null, job: null })
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const myposts = () => {
       try {
         setLoaderState(true)
         const jobs = await getJobsMyPosts()
-        console.log(jobs, 'dataaaaaaaaaaaaa<<<<<<<------')
+        // console.log(jobs, 'dataaaaaaaaaaaaa<<<<<<<------')
 
         const jobsWithDetails = await Promise.all(jobs.map(async (job) => {
           const jobDetails = await getJobIdMyPosts(job.id)
@@ -47,12 +47,22 @@ export const myposts = () => {
   const handleButtonAccept = (postulante, job) => {
     try {
       setLoaderState(true)
-      console.log('id buttonAccept---->', postulante, job)
+      // console.log('id buttonAccept---->', postulante, job)
       setJobStateProffesional({ postulante, job })
     } catch (error) {
       console.log('error buttonAccept ---->', error)
     } finally {
       setLoaderState(false)
+    }
+  }
+
+  const handleButtonJobFinish = async (jobId, userId) => {
+    console.log(jobId, userId, '#########################')
+    try {
+      const data = await putJobFinish({jobId, userId})
+      console.log(data, '<<<<<<<<<<<<-------------------- D A T A JOBFINISH ')
+    } catch (error) {
+      console.log(error, 'error jobfinish')
     }
   }
 
@@ -67,7 +77,7 @@ export const myposts = () => {
                   return (
                     <div className='w-[80%] flex flex-col my-10 bg-gray-900 items-center rounded-xl' key={job.id}>
                       <div className='w-[80%] min-h-1/4 bg-gray-900 flex justify-evenly items-center'>
-                        <img src="https://i.ibb.co/k6yvRKP/logo2-Photoroom.png" alt="" className='w-[100px]' />
+                        <img src={job.img} alt="" className='w-[100px]' />
                         <div className='w-2/3 flex flex-col justify-evenly '>
                           <h3 className='text-yellow-500 font-bold text-3xl text-center'>{job.name}</h3>
                           <p className=' text-gray-300 text-center'>{job.description}</p>
@@ -93,7 +103,7 @@ export const myposts = () => {
                               <p className='text-gray-300'>Rating: {jobStateProffesional.postulante.rating}</p>
                             </div>
                             <div className='w-1/4'>
-                              <button type="button" className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-1/2 text-center">Finish Job</button>
+                              <button type="button" className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center" onClick={()=>{ handleButtonJobFinish(jobStateProffesional.job.id, jobStateProffesional.postulante.id)}}>Finish Job</button>
                             </div>
                           </div>
                         ) : (
@@ -140,6 +150,52 @@ export const myposts = () => {
                                 </tbody>
                               )}
                             </table>
+                            {/* --------------------------------- */}
+                            {
+
+                            }
+                            {/* <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                  <th scope="col" className="px-6 py-3">Professional Name</th>
+                                  <th scope="col" className="px-6 py-3">Ubication</th>
+                                  <th scope="col" className="px-6 py-3">Category</th>
+                                  <th scope="col" className="px-6 py-3">Price</th>
+                                  <th scope="col" className="px-6 py-3">Rating</th>
+                                  <th scope="col" className="px-6 py-3"></th>
+                                </tr>
+                              </thead>
+                              {job.postulations && job.postulations.length > 0 ? (
+                                job.postulations.map((postulante) => (
+                                  <tbody key={postulante.id}>
+                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                      <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{postulante.user.name}</th>
+                                      <td className="px-6 py-4">{postulante.user.city}</td>
+                                      <td className="px-6 py-4">
+                                        {postulante.user.categories?.map((category) => (
+                                          <p key={category.id}>{category.name}</p>
+                                        ))}
+                                      </td>
+                                      <td className="px-6 py-4">{postulante.offered_price}</td>
+                                      <td className="px-6 py-4">{postulante.user.rating}</td>
+                                      <td className="px-6 py-4">
+                                        <button type="button"
+                                          className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+                                          onClick={''}>
+                                          Eliminar Postulacion
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                ))
+                              ) : (
+                                <tbody>
+                                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <td colSpan="6" className="px-6 py-4 text-center text-gray-500">Aún no hay postulantes</td>
+                                  </tr>
+                                </tbody>
+                              )}
+                            </table> */}
                           </div>
                         )}
                       </div>
