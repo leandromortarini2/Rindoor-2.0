@@ -1,7 +1,8 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Carrusel2 from "../components/Carrusel2/Carrusel2";
 import { Categories } from "../components/Categories/Categories";
+import { getCategory } from "../helpers/getCategory";
 
 export default function Home() {
   return (
