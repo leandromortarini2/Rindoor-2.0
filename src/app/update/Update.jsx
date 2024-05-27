@@ -26,8 +26,11 @@ const Update = () => {
     role: "",
     categories: [],
   });
-
+  // const { dataUser } = useAuth();
   useEffect(() => {
+    // if (dataUser) {
+    //   window.location.href = "/";
+    // }
     const fetchCategories = async () => {
       try {
         const data = await getCategory();
@@ -83,7 +86,7 @@ const Update = () => {
         confirmButtonText: "Cool",
       });
 
-      // window.location.href = "/";
+      window.location.href = "/";
     } catch (error) {
       Swal.fire({
         title: "Error!",

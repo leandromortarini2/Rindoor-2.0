@@ -4,10 +4,26 @@ import { getUsers, banUser } from "../../../helpers/adminUsers";
 import Swal from "sweetalert2";
 import { MenuAdmin } from "../../../components/MenuAdmin/MenuAdmin";
 import { PaginacionUsers } from "../../../components/PaginacionUsers/PaginacionUsers";
+import { useAuth } from "../../context/Context";
+import { redirect } from "next/navigation";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    if (userData?.role !== "ADMIN") {
+      Swal.fire({
+        title: "Alto!",
+        text: "El acceso negado",
+        icon: "error",
+        confirmButtonText: "Completar",
+      });
+      redirect("/");
+    }
+  }, [userData]);
 
   useEffect(() => {
     const fetchGetUsers = async () => {
@@ -52,7 +68,7 @@ const Users = () => {
           Usuarios
         </h2>
       </div>{" "}
-      <PaginacionUsers Pagination={handlePagination} />
+      {/* <PaginacionUsers Pagination={handlePagination} /> */}
       <div className="w-full flex flex-wrap items-center justify-center">
         {users?.length > 0 ? (
           users.map((user) => (

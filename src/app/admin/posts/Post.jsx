@@ -4,10 +4,26 @@ import { getPosts } from "../../../helpers/adminUsers";
 import { deletePosts } from "../../../helpers/adminUsers";
 import { MenuAdmin } from "../../../components/MenuAdmin/MenuAdmin";
 import Swal from "sweetalert2";
+import { useAuth } from "../../context/Context";
+import { redirect } from "next/navigation";
 
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    if (userData?.role !== "ADMIN") {
+      Swal.fire({
+        title: "Alto!",
+        text: "El acceso negado",
+        icon: "error",
+        confirmButtonText: "Completar",
+      });
+      redirect("/");
+    }
+  }, [userData]);
 
   useEffect(() => {
     const fetchGetPosts = async () => {
@@ -83,23 +99,23 @@ const Post = () => {
 
               <p className="text-md text-gray-500 font-semibold capitalize text-center">
                 description:
-                <span className="text-white">{post.description}</span>
+                <span className="text-white">{post?.description}</span>
               </p>
               <p className="text-mm text-gray-500 font-semibold capitalize">
                 base price:
-                <span className="text-white">{post.base_price}</span>
+                <span className="text-white">{post?.base_price}</span>
               </p>
               <p className="text-lg text-gray-500 font-semibold capitalize">
                 status:
-                <span className="text-white">{post.status}</span>
+                <span className="text-white">{post?.status}</span>
               </p>
               <p className="text-md text-gray-500 font-semibold capitalize">
                 user:
-                <span className="text-white">{post.user.name}</span>
+                <span className="text-white">{post?.user?.name}</span>
               </p>
               <p className="text-sm text-gray-500 font-semibold capitalize text-center">
                 userID:
-                <span className="text-white lowercase">{post.user.id}</span>
+                <span className="text-white lowercase">{post?.user?.id}</span>
               </p>
               <div className="w-full flex justify-evenly ">
                 <button
