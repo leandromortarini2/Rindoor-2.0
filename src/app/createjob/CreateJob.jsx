@@ -6,6 +6,7 @@ import { getCategory } from "../../helpers/getCategory";
 import Swal from "sweetalert2";
 import { useAuth } from "../context/Context";
 import { redirect } from "next/navigation";
+import arrayProvincias from "../update/provincias";
 
 const CreateJob = () => {
   const { userData } = useAuth();
@@ -24,6 +25,10 @@ const CreateJob = () => {
     base_price: "",
     categoryId: "",
     userId: "",
+    country: "argentina",
+    province: "",
+    city: "",
+    address: "",
     file: null,
   });
 
@@ -37,7 +42,7 @@ const CreateJob = () => {
       });
       redirect("/update");
     }
-  });
+  }, [userData]);
 
   useEffect(() => {
     // Actualizar userId en postState cuando cambie
@@ -92,20 +97,40 @@ const CreateJob = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Asegúrate de que todos los campos requeridos están presentes y no están vacíos
+    if (
+      !postState.country ||
+      !postState.province ||
+      !postState.city ||
+      !postState.address
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: "Por favor completa todos los campos requeridos",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", postState.name);
     formData.append("description", postState.description);
     formData.append("base_price", postState.base_price);
     formData.append("categoryId", postState.categoryId);
     formData.append("userId", postState.userId);
+    formData.append("country", postState.country);
+    formData.append("province", postState.province);
+    formData.append("city", postState.city);
+    formData.append("address", postState.address);
     formData.append("file", postState.file);
 
     try {
       const datapost = await postNewPublic(formData);
 
       Swal.fire({
-        title: "success!",
-        text: "successful publication",
+        title: "Success!",
+        text: "Successful publication",
         icon: "success",
         confirmButtonText: "Cool",
       });
@@ -202,6 +227,39 @@ const CreateJob = () => {
               name="file"
               onChange={handleOnChange}
               className="w-3/4 p-2 placeholder:text-sm text-sm"
+            />
+
+            {/* SELECT province */}
+            <select
+              name="province"
+              value={postState.province}
+              onChange={handleOnChange}
+              className="w-3/4 p-2 bg-gray-900 placeholder:text-sm text-sm border-b-2 border-yellow-500 font-semibold"
+            >
+              <option value="">Choose province:</option>
+              {arrayProvincias.map((province, index) => (
+                <option key={index} value={province}>
+                  {province}
+                </option>
+              ))}
+            </select>
+            {/* INPUT city */}
+            <input
+              type="text"
+              name="city"
+              value={postState.city}
+              onChange={handleOnChange}
+              className="w-3/4 h-10 bg-transparent border-b-2 border-yellow-500 mt-3 font-semibold"
+              placeholder="City..."
+            />
+            {/* INPUT address */}
+            <input
+              type="text"
+              name="address"
+              value={postState.address}
+              onChange={handleOnChange}
+              className="w-3/4 h-10 bg-transparent border-b-2 border-yellow-500 mt-3 font-semibold"
+              placeholder="Address..."
             />
             <button
               disabled={Object.keys(errorForm).length > 0}
