@@ -8,9 +8,10 @@ import Link from 'next/link'
 export const myposts = () => {
   const { userData } = useAuth()
   const [userDataState, setUserDataState] = useState(null)
+  console.log(userDataState, 'userDataStateuserDataState')
   const [loaderState, setLoaderState] = useState(true)
   const [jobState, setJobState] = useState([])
-  // console.log(jobState, '------>>>>jobState')
+  console.log(jobState, '------>>>>jobState')
   const [jobStateProffesional, setJobStateProffesional] = useState({ postulante: null, job: null })
 
   useEffect(() => {
@@ -58,13 +59,18 @@ export const myposts = () => {
 
   const handleButtonJobFinish = async (jobId, userId) => {
     console.log(jobId, userId, '#########################')
+    const dataJob= {
+      jobId: jobId,
+      userId: userId
+    }
     try {
-      const data = await putJobFinish({jobId, userId})
+      const data = await putJobFinish(dataJob)
       console.log(data, '<<<<<<<<<<<<-------------------- D A T A JOBFINISH ')
     } catch (error) {
       console.log(error, 'error jobfinish')
     }
   }
+ 
 
   return (
     <>
@@ -76,10 +82,10 @@ export const myposts = () => {
                 if (job.client.id === userDataState.id) {
                   return (
                     <div className='w-[80%] flex flex-col my-10 bg-gray-900 items-center rounded-xl' key={job.id}>
-                      <div className='w-[80%] min-h-1/4 bg-gray-900 flex justify-evenly items-center'>
-                        <img src={job.img} alt="" className='w-[100px]' />
-                        <div className='w-2/3 flex flex-col justify-evenly '>
-                          <h3 className='text-yellow-500 font-bold text-3xl text-center'>{job.name}</h3>
+                      <div className='w-[80%] min-h-1/4 bg-gray-900 flex flex-col sm:flex-row justify-evenly items-center'>
+                        <img src={job.img} alt="" className=' w-[80%] sm:w-[100px] my-2' />
+                        <div className=' w-[90%] md:w-2/3 flex flex-col justify-evenly '>
+                          <h3 className='text-yellow-500 font-bold text-2xl md:text-3xl text-center  uppercase'>{job.name}</h3>
                           <p className=' text-gray-300 text-center'>{job.description}</p>
                           <p className=' text-gray-300 text-center'>Estado: {job.status}</p>
                           <p className=' text-gray-300 text-center'>Precio: $ {job.base_price}</p>
@@ -133,11 +139,17 @@ export const myposts = () => {
                                       <td className="px-6 py-4">{postulante.offered_price}</td>
                                       <td className="px-6 py-4">{postulante.user.rating}</td>
                                       <td className="px-6 py-4">
-                                        <button type="button"
+                                        {
+                                          userDataState.role === 'CLIENT' ? (<button type="button"
                                           className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
                                           onClick={() => { handleButtonAccept(postulante.user, job) }}>
                                           Aceptar
-                                        </button>
+                                        </button>) : ( <button type="button"
+                                          className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+                                          onClick={''}>
+                                          Eliminar Postulacion
+                                        </button>)
+                                        }
                                       </td>
                                     </tr>
                                   </tbody>
