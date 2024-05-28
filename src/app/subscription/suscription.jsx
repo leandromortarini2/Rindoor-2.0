@@ -31,6 +31,17 @@ const Subscription = () => {
         confirmButtonText: "Ok",
       });
       redirect("/")}
+      
+        if (!userData) {
+          Swal.fire({
+            title: "Espera!",
+            text: "Para crear una publicacion debes completar tus datos",
+            icon: "info",
+            confirmButtonText: "Completar",
+          });
+          redirect("/update");
+        }
+     
   }, [userData]);
 
   useEffect(() => {
@@ -63,33 +74,7 @@ const Subscription = () => {
     plansResponse();
   }, []);
 
-  useEffect(() => {
-    // Función para mostrar la alerta y redirigir al usuario
-    const showAlertAndRedirect = async () => {
-        // Mostrar la alerta y esperar a que el usuario haga clic en el botón de confirmación
-        await Swal.fire({
-            title: "Espera!",
-            text: "Antes de subscribirte debes completar tus datos",
-            icon: "info",
-            confirmButtonText: "Completar",
-        });
-
-        // Redirigir al formulario de registro
-        redirect("/update")
-    };
-    // Redirigir al formulario de registro después de 2 segundos si los datos del usuario aún no están disponibles
-    const timer = setTimeout(() => {
-        if (userIdContext === null) {
-            showAlertAndRedirect();
-        } else {
-            setLoaderState(false);
-        }
-    }, 2000);
-
-    // Limpiar el temporizador al desmontar el componente
-    return () => clearTimeout(timer);
-}, [userIdContext]);
-
+ 
 
   const handleButton = async (planId) => {
     if (userIdContext) {
