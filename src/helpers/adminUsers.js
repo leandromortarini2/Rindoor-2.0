@@ -10,6 +10,7 @@ import axios from "axios";
 const URL_USERS = process.env.NEXT_PUBLIC_API_URL_USERS;
 const URL_BANNED_USER = process.env.NEXT_PUBLIC_API_URL_BANNED_USER;
 const URL_JOBS = process.env.NEXT_PUBLIC_API_URL_JOBS;
+const URL_BANNED_JOB = process.env.NEXT_PUBLIC_API_URL_BANNED_JOB;
 const URL_CATEGORY = process.env.NEXT_PUBLIC_API_URL_CATEGORY;
 
 // USERS
@@ -74,13 +75,12 @@ export const getPosts = async () => {
   }
 };
 
-export const deletePosts = async (id) => {
+export const banPost = async (id) => {
   try {
-    const res = await axios.delete(`${URL_JOBS}/${id}`);
+    const res = await axios.put(`${URL_BANNED_JOB}/${id}`);
     return res.data;
   } catch (error) {
-    console.error(`Error al eliminar la publicacion con id ${id}`, error);
-
+    console.error(`Error al banear el usuario con id ${id}`, error);
     return { error: true, message: error.message };
   }
 };

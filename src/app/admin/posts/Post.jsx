@@ -1,7 +1,7 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import { getPosts } from "../../../helpers/adminUsers";
-import { deletePosts } from "../../../helpers/adminUsers";
+import { banPost, getPosts } from "../../../helpers/adminUsers";
 import { MenuAdmin } from "../../../components/MenuAdmin/MenuAdmin";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/Context";
@@ -39,35 +39,33 @@ const Post = () => {
     fetchGetPosts();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleBan = async (id) => {
     try {
-      const deleteUser = deletePosts(id);
-      if (!id) {
+      const response = await banPost(id);
+      console.log(response);
+      if (response.status === 200 || response.banned) {
         Swal.fire({
-          title: "eliminado!",
-          text: "publicacion eliminada con exito",
+          title: "Ban!",
+          text: "Publicación baneada con éxito",
           icon: "success",
           confirmButtonText: "Cool",
+        }).then(() => {
+          setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+              post.id === id ? { ...post, banned: true } : post
+            )
+          ); // Actualiza el estado para establecer el campo banned en true
         });
       } else {
-        Swal.fire({
-          title: "Error!",
-          text: "No se pudo eliminar la publicacion",
-          icon: "error",
-          confirmButtonText: "Cool",
-        });
+        throw new Error("No se pudo banear la publicación");
       }
-
-      // window.location.href = "/admin/users";
     } catch (error) {
-      if (id) {
-        Swal.fire({
-          title: "Error!",
-          text: "No se pudo eliminar la publicacion",
-          icon: "error",
-          confirmButtonText: "Cool",
-        });
-      }
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudo banear la publicación",
+        icon: "error",
+        confirmButtonText: "Cool",
+      });
     }
   };
 
@@ -76,7 +74,6 @@ const Post = () => {
       <p className="text-2xl text-red-600 font-semibold capitalize">{error}</p>
     );
   }
-
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 flex flex-col items-center ">
       <MenuAdmin />
@@ -119,10 +116,11 @@ const Post = () => {
               </p>
               <div className="w-full flex justify-evenly ">
                 <button
-                  onClick={() => handleDelete(post.id)}
-                  className="w-1/4 h-[40px] xl:text-xl text-white  p-1 block rounded-lg  font-semibold duration-1000 bg-red-500 hover:bg-red-900  hover:text-red-500 m-3 capitalize"
+                  onClick={() => handleBan(post.id)}
+                  disabled={post?.banned === true}
+                  className="w-1/4 h-[40px] xl:text-xl text-white  p-1 block rounded-lg  font-semibold duration-1000 bg-red-500 hover:bg-red-900  hover:text-red-500 m-3 capitalize disabled:bg-slate-800 disabled:text-slate-500"
                 >
-                  delete
+                  Ban
                 </button>
               </div>
             </div>
