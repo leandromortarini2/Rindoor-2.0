@@ -8,16 +8,15 @@ import { redirect } from "next/navigation";
 
 
 export const WorkPageCard = ({ cardData }) => {
-
   const { userData } = useAuth();
-  const [userDataState, setUserDataState] = useState()
-  console.log(userDataState, '<<<---- user data state')
+  const [userDataState, setUserDataState] = useState(null);
+  const [redirectPath, setRedirectPath] = useState(null);
 
-  useEffect(()=>{
-    if(userData){
-      setUserDataState(userData)
+  useEffect(() => {
+    if (userData) {
+      setUserDataState(userData);
     }
-  }, [userData])
+  }, [userData]);
 
   const initialData = {
     message: "",
@@ -57,40 +56,47 @@ export const WorkPageCard = ({ cardData }) => {
   };
 
   const handleClick = async () => {
-    try {
-      const validationErrors = validate(formData);
+    const validationErrors = validate(formData);
     setErrors(validationErrors);
 
     const dataPostulations = {
       message: formData.message,
       offered_price: formData.offered_price,
       userId: userDataState.id,
-      jobId: cardData.id, 
-    } 
+      jobId: cardData.id,
+    };
 
-    // console.log(dataPostulations, 'dataPostulations')
     if (Object.keys(validationErrors).length === 0) {
-      console.log("mensaje enviado exitosamente", formData);
-      const data = await postPostulation(dataPostulations)
-      if(data) {
+      try {
+        const data = await postPostulation(dataPostulations);
+        if (data) {
+          Swal.fire({
+            title: "¡Felicidades",
+            text: "Tu postulacion fue creada con éxito!",
+            confirmButtonText: "Aceptar",
+          }).then(() => {
+            setRedirectPath("/works");
+          });
+        }
+      } catch (error) {
         Swal.fire({
-          title: "¡Felicidades",
-          text: "Tu postulacion fue creada con éxito!",
+          title: "Ya estas postulado",
+          text: "Estas postulado en este trabajo",
+          icon: "info",
           confirmButtonText: "Aceptar",
+        }).then(() => {
+          setRedirectPath("/works");
         });
-        redirect("/works");
       }
     }
-    } catch (error) {
-      Swal.fire({
-        title: "¡Ya estas postulado!",
-        text: "Ya te haz postulado a este trabajo!",
-        icon: "info",
-        confirmButtonText: "Ok",
-      });
-    }
-   
   };
+
+  useEffect(() => {
+    if (redirectPath) {
+      window.location.href = redirectPath;
+    }
+  }, [redirectPath]);
+
 
   return (
     <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
