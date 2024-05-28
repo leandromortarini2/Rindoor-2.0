@@ -128,9 +128,10 @@ const Users = () => {
               <div className="w-full flex justify-evenly">
                 <button
                   onClick={() => handleBanned(user.id)}
-                  className="w-1/4 h-[40px] xl:text-xl text-white p-1 block rounded-lg font-semibold duration-1000 bg-red-500 hover:bg-red-900 hover:text-red-500 m-3 capitalize"
+                  disabled={user?.isActive === false}
+                  className="w-1/4 h-[40px] xl:text-xl text-white p-1 block rounded-lg font-semibold duration-1000 bg-red-500 hover:bg-red-900 hover:text-red-500 m-3 capitalize disabled:bg-gray-700 disabled:text-gray-500"
                 >
-                  Ban
+                  ban
                 </button>
               </div>
             </div>

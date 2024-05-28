@@ -11,74 +11,80 @@ import { WorksPageSelector } from "../../components/WorksPageSelector/WorksPageS
 import { wctest } from "../../components/WorkCard/dataTest";
 import Loader from "../../components/Loader/Loader";
 
-const works = () => {
+const Works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);
   const [worksData, setWorksData] = useState([]);
   const [params, setParams] = useState({});
   const [LoaderState, setLoaderState] = useState(true);
-  // "&categories=Fontaneria&categories=Electricidad&minPrice=0&maxPrice=10000";
+
   useEffect(() => {
     getWorks()
       .then((responseData) => {
         console.log("useEffect" + responseData + "useEffect");
-        setWorksData(responseData);
-        setWorksDataOg(responseData);
+        // Filtrar los trabajos que no están baneados
+        const filteredWorks = responseData.filter((work) => !work.banned);
+        setWorksData(filteredWorks);
+        setWorksDataOg(filteredWorks);
       })
       .catch((error) => console.error(error));
     setLoaderState(false);
   }, []);
-  // const setWorks1 = () => {
-  //   setWorksData(worksDataOg);
-  // };
 
   const filterWorksCategory = (cate) => {
-    let params1 = params;
-    params1.categories = cate;
+    let params1 = { ...params, categories: cate };
     setParams(params1);
     getWorks(params1)
       .then((responseData) => {
         console.log(
           "filterWorksCategory" + responseData + "filterWorksCategory"
         );
-        setWorksData(responseData);
+        // Filtrar los trabajos que no están baneados
+        const filteredWorks = responseData.filter((work) => !work.banned);
+        setWorksData(filteredWorks);
       })
       .catch((error) => console.error(error));
   };
+
   const filterWorksPrice = (min = 0, max = 99999999) => {
-    let params1 = params;
-    params1.minPrice = min;
-    params1.maxPrice = max;
+    let params1 = { ...params, minPrice: min, maxPrice: max };
     setParams(params1);
     console.log(params1);
     getWorks(params1)
       .then((responseData) => {
         console.log(responseData);
-        setWorksData(responseData);
+        // Filtrar los trabajos que no están baneados
+        const filteredWorks = responseData.filter((work) => !work.banned);
+        setWorksData(filteredWorks);
       })
       .catch((error) => console.error(error));
   };
+
   const resetData = () => {
     setWorksData(worksDataOg);
     setParams({});
   };
+
   const Pagination = (peich) => {
-    let params1 = params;
-    params1.page = peich;
+    let params1 = { ...params, page: peich };
     setParams(params1);
     getWorks(params1)
       .then((responseData) => {
-        setWorksData(responseData);
+        // Filtrar los trabajos que no están baneados
+        const filteredWorks = responseData.filter((work) => !work.banned);
+        setWorksData(filteredWorks);
       })
       .catch((error) => console.error(error));
   };
+
   const sortWorks = (sort) => {
-    let params1 = params;
-    params1[`${sort.key}`] = sort.value;
+    let params1 = { ...params, [sort.key]: sort.value };
     console.log(params1);
     setParams(params1);
     getWorks(params1)
       .then((responseData) => {
-        setWorksData(responseData);
+        // Filtrar los trabajos que no están baneados
+        const filteredWorks = responseData.filter((work) => !work.banned);
+        setWorksData(filteredWorks);
       })
       .catch((error) => console.error(error));
   };
@@ -95,7 +101,7 @@ const works = () => {
           />
         </div>
         <div className="w-full min-h-screen bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col items-center">
-          <div className="lg:w-3/4 h-full top-0  bg-zinc-400 bg-opacity-20 w-full">
+          <div className="lg:w-3/4 h-full top-0  bg-opacity-20 w-full">
             {LoaderState ? <Loader /> : <CardContainer worksData={worksData} />}
           </div>
         </div>
@@ -103,4 +109,5 @@ const works = () => {
     </div>
   );
 };
-export default works;
+
+export default Works;
