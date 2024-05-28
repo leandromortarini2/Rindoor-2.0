@@ -32,14 +32,9 @@ export const getJobIdMyPosts = async (id) => {
  * Esta funcion permite finalizar un trabajo, es decir cuando un cliente o profesional de click en un boton de 'Finalizar Trabajo' este aparezca como finalizado. 
  * Esta funcion recibe por parametros un jobId y userId. Hace una solicitud PUT a '/jobs/finish', enviando esos parametros, y devuelve ...
  */
-export const putJobFinish = async ({jobId, userId}) => {
+export const putJobFinish = async (jobData) => {
     try {
-        const response = await axios.put(URL_JOBS_FINISH, {
-          
-                jobId: jobId,
-                userId: userId,
-            
-        })
+        const response = await axios.put(URL_JOBS_FINISH, jobData)
         console.log('response.data job finish ---->', response.data)
         return response.data
     } catch (error) {

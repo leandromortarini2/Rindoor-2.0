@@ -75,9 +75,8 @@ const Subscription = () => {
         });
 
         // Redirigir al formulario de registro
-        redirect("/update/")
+        redirect("/update")
     };
-
     // Redirigir al formulario de registro después de 2 segundos si los datos del usuario aún no están disponibles
     const timer = setTimeout(() => {
         if (userIdContext === null) {

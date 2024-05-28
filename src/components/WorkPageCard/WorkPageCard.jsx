@@ -1,13 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
+
 export const WorkPageCard = ({ cardData }) => {
-  let data = {
+  const initialData = {
     message: "",
     offered_price: 0,
   };
-  const [formData, setFormData] = useState(data);
-  const [errors, setErrors] = useState(data);
+
+  const [formData, setFormData] = useState(initialData);
+  const [errors, setErrors] = useState({});
 
   const formatearFecha = (fecha) => {
     const fecha1 = new Date(fecha);
@@ -18,15 +20,16 @@ export const WorkPageCard = ({ cardData }) => {
     };
     return fecha1.toLocaleString("es", opciones);
   };
+
   const formattedDate = formatearFecha(cardData?.created_at);
 
-  const validate = (data1) => {
+  const validate = (data) => {
     let errorsObj = {};
-    if (!data1.message) {
+    if (!data.message) {
       errorsObj.message = "inserte un mensaje";
     }
-    if (!data1.offered_price) {
-      errorsObj.offered_price = "inserte un presupuesto estimado";
+    if (!data.offered_price || data.offered_price <= 0) {
+      errorsObj.offered_price = "inserte un presupuesto estimado válido";
     }
     return errorsObj;
   };
@@ -38,41 +41,41 @@ export const WorkPageCard = ({ cardData }) => {
   };
 
   const handleClick = () => {
-    if (Object.keys(errors).some((e) => !errors[e])) {
-      console.log(errors);
-      console.log(Object.keys(errors).some((e) => !errors[e]));
-      console.log("mensaje enviado exitosamente");
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("mensaje enviado exitosamente", formData);
+      // Aquí deberías llamar a la función para enviar los datos
+      // enviarDatos(formData);
     } else {
-      console.log(errors);
-      console.log(Object.keys(errors).some((e) => !errors[e]));
-      console.log("por ahi no, maquina");
+      console.log("Errores en el formulario", validationErrors);
     }
   };
 
   return (
-    <div className="bg-gray-800  min-h-screen w-4/5 my-5 rounded-2xl">
+    <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
       <div className="flex flex-col items-center">
         <div className="w-full">
-          <h2 className=" flex-end text-2xl p-2 italic text-yellow-200 ">
+          <h2 className="flex-end text-2xl p-2 italic text-yellow-200 ">
             Albañileria
           </h2>
         </div>
         <div className="m-2 flex flex-col lg:flex-row w-full">
           <div className="mx-5 lg:w-1/2 h-96 flex items-center justify-center">
             <img
-              className=" bg-white rounded max-w-fit max-h-96"
+              className="bg-white rounded max-w-fit max-h-96"
               src={cardData?.img}
               alt="ilustracion-trabajo"
             />
           </div>
-          <div className=" flex flex-col ml-4 lg:w-1/2 w-full">
+          <div className="flex flex-col ml-4 lg:w-1/2 w-full">
             <div className="w-full flex justify-center lg:justify-normal">
               <h2 className="text-5xl font-bold text-yellow-300 lg:m-0 mt-10">
                 {cardData?.name}
               </h2>
             </div>
             <div className="ASDSAD lg:flex-none lg:flex md:flex md:flex-row lg:flex-col w-full">
-              <div className="lg:w-auto w-1/2 ">
+              <div className="lg:w-auto w-1/2">
                 <h3 className="my-5 text-2xl text-yellow-300">
                   {cardData?.user?.name}
                 </h3>
@@ -81,12 +84,14 @@ export const WorkPageCard = ({ cardData }) => {
                 </h3>
               </div>
               <div>
-                <div className="flex flex-row items-center text-yellow-300  mt-3 lg:mt-0 ">
+                <div className="flex flex-row items-center text-yellow-300 mt-3 lg:mt-0">
                   <FaLocationDot size={30} />
-                  <h3 className="ml-5 mr-10 text-2xl">Zárate , Buenos Aires</h3>
+                  <h3 className="ml-5 mr-10 text-2xl">
+                    Zárate , Buenos Aires
+                  </h3>
                 </div>
                 <h3 className="my-5 text-3xl text-yellow-300">
-                  Presupuesto :{cardData?.base_price}
+                  Presupuesto : {cardData?.base_price}
                 </h3>
               </div>
             </div>
@@ -110,11 +115,14 @@ export const WorkPageCard = ({ cardData }) => {
                   <input
                     type="text"
                     name="message"
-                    className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full  "
+                    className="bg-gray-800 h-10 border mt-1 rounded px-4 w-full"
                     placeholder="Mensaje..."
                     value={formData.message}
                     onChange={handleChange}
                   />
+                  {errors.message && (
+                    <p className="text-red-500">{errors.message}</p>
+                  )}
                 </div>
                 <div className="md:col-span-5">
                   <label className="text-yellow-500">Presupuesto</label>
@@ -125,16 +133,17 @@ export const WorkPageCard = ({ cardData }) => {
                     name="offered_price"
                     value={formData.offered_price}
                     onChange={handleChange}
-                    id="full_name"
-                    className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full "
+                    className="bg-gray-800 h-10 border mt-1 rounded px-4 w-full"
                     placeholder="00.0"
                   />
+                  {errors.offered_price && (
+                    <p className="text-red-500">{errors.offered_price}</p>
+                  )}
                 </div>
-
                 <div className="md:col-span-5 text-right">
                   <div className="inline-flex items-end">
                     <button
-                      onClick={() => handleClick()}
+                      onClick={handleClick}
                       className="bg-yellow-300 text-gray-900 hover:bg-gray-700 hover:text-yellow-500 font-bold py-2 px-4 rounded"
                     >
                       Submit
