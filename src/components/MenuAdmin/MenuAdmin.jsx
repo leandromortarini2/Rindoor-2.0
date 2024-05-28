@@ -3,10 +3,11 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import burgerImg from "../../assets/burger.svg";
+import openImg from "../../assets/caret-down-svgrepo-com.svg";
+import closeImg from "../../assets/caret-up-svgrepo-com.svg";
 
 export const MenuAdmin = () => {
-  const [burger, setBurger] = useState();
+  const [burger, setBurger] = useState(false);
 
   const handleBurger = () => {
     setBurger(!burger);
@@ -52,20 +53,20 @@ export const MenuAdmin = () => {
       {burger === false ? (
         <button
           onClick={handleBurger}
-          className="w-1/2 h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-gray-500 font-semibold duration-1000 bg-gray-500 hover:bg-gray-700  hover:text-white m-3 capitalize sm:hidden"
+          className="w-full h-[50px] bg-gray-500  hover:bg-gray-800 hover:text-yellow-500 text-xl text-center  font-bold text-gray-300 uppercase  tracking-widest  sm:hidden flex  justify-around items-center"
         >
-          menu admin
+          Panel|Admin <Image src={openImg} alt="" className="w-10" />
         </button>
       ) : (
         <button
           onClick={handleBurger}
-          className="w-1/2 h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-gray-500 font-semibold duration-1000 bg-gray-500 hover:bg-gray-700  hover:text-white m-3 capitalize sm:hidden"
+          className="w-full h-[50px] bg-gray-500  hover:bg-gray-800 hover:text-yellow-500 text-xl text-center  font-bold text-gray-300 uppercase  tracking-widest  sm:hidden flex  justify-around items-center"
         >
-          Close
+          Close <Image src={closeImg} alt="" className="w-10" />
         </button>
       )}
       {burger === true ? (
-        <div className="w-full min-h-[300px] bg-gray-950 flex flex-col  items-center justify-evenly absolute mt-14 z-20 sm:hidden">
+        <div className="w-full min-h-[300px] bg-gray-950 flex flex-col  items-center justify-evenly absolute mt-12 z-20 sm:hidden">
           <Link href="/admin">
             <button className="text-white font-bold text-center xl:text-2xl  capitalize duration-500  hover:text-yellow-500 ">
               {" "}

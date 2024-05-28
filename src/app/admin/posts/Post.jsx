@@ -91,48 +91,48 @@ const Post = () => {
   return (
     <div className="w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 flex flex-col items-center ">
       <MenuAdmin />
-      <div className="w-1/2 h-20 bg-gray-500 flex justify-center items-center m-5 rounded-3xl">
-        <h2 className="text-3xl text-gray-900 font-bold text-center capitalize">
+      <div className="w-3/4 h-14 md:w-1/2  lg:h-20 bg-gray-500 flex justify-center items-center m-5 rounded-3xl">
+        <h2 className="text-xl lg:text-3xl text-gray-900 font-bold text-center capitalize">
           Publicaciones de trabajo
         </h2>
       </div>
 
-      <div className="w-full flex flex-wrap items-center justify-center">
+      <div className="w-full flex flex-col md:flex-row flex-wrap items-center justify-center">
         {paginatedPosts.length > 0 ? (
           paginatedPosts.map((post) => (
             <div
               key={post.id}
-              className="w-1/3 h-[400px] m-5 flex flex-col justify-evenly items-center bg-gray-900 border border-gray-900 rounded-2xl p-2 "
+              className="w-3/4 md:w-1/3 h-[500px] m-5 flex flex-col justify-evenly items-center bg-gray-900 border border-gray-900 rounded-2xl p-2 "
             >
-              <p className="text-xl text-white font-semibold capitalize m-2 text-center">
+              <p className="text-lg lg:text-xl  text-white font-semibold capitalize m-2 text-center">
                 {post.name}
               </p>
 
-              <p className="text-md text-gray-500 font-semibold capitalize text-center">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize text-center">
                 Description:
                 <span className="text-white"> {post?.description}</span>
               </p>
-              <p className="text-mm text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 Base price:
                 <span className="text-white"> {post?.base_price}</span>
               </p>
-              <p className="text-lg text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 Country:
                 <span className="text-white"> {post?.country}</span>
               </p>
-              <p className="text-lg text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 Province:
                 <span className="text-white"> {post?.province}</span>
               </p>
-              <p className="text-lg text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 City:
                 <span className="text-white"> {post?.city}</span>
               </p>
-              <p className="text-lg text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 Address:
                 <span className="text-white"> {post?.address}</span>
               </p>
-              <p className="text-lg text-gray-500 font-semibold capitalize">
+              <p className="text-sm lg:text-md text-gray-500 font-semibold capitalize">
                 banned:{" "}
                 {post?.banned === true ? (
                   <span className="text-white">true</span>
