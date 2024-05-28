@@ -1,8 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
+import { postPostulation } from "../../helpers/helperWorksPage";
+import { useAuth } from "../../app/context/Context";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
+
 
 export const WorkPageCard = ({ cardData }) => {
+
+  const { userData } = useAuth();
+  const [userDataState, setUserDataState] = useState()
+  console.log(userDataState, '<<<---- user data state')
+
+  useEffect(()=>{
+    if(userData){
+      setUserDataState(userData)
+    }
+  }, [userData])
+
   const initialData = {
     message: "",
     offered_price: 0,
@@ -40,16 +56,40 @@ export const WorkPageCard = ({ cardData }) => {
     setErrors(validate({ ...formData, [name]: value }));
   };
 
-  const handleClick = () => {
-    const validationErrors = validate(formData);
+  const handleClick = async () => {
+    try {
+      const validationErrors = validate(formData);
     setErrors(validationErrors);
+
+    const dataPostulations = {
+      message: formData.message,
+      offered_price: formData.offered_price,
+      userId: userDataState.id,
+      jobId: cardData.id, 
+    } 
+
+    // console.log(dataPostulations, 'dataPostulations')
     if (Object.keys(validationErrors).length === 0) {
       console.log("mensaje enviado exitosamente", formData);
-      // Aquí deberías llamar a la función para enviar los datos
-      // enviarDatos(formData);
-    } else {
-      console.log("Errores en el formulario", validationErrors);
+      const data = await postPostulation(dataPostulations)
+      if(data) {
+        Swal.fire({
+          title: "¡Felicidades",
+          text: "Tu postulacion fue creada con éxito!",
+          confirmButtonText: "Aceptar",
+        });
+        redirect("/works");
+      }
     }
+    } catch (error) {
+      Swal.fire({
+        title: "¡Ya estas postulado!",
+        text: "Ya te haz postulado a este trabajo!",
+        icon: "info",
+        confirmButtonText: "Ok",
+      });
+    }
+   
   };
 
   return (
