@@ -1,18 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
+import { postPostulation } from "../../helpers/helperWorksPage";
+import { useAuth } from "../../app/context/Context";
 import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
+
 export const WorkPageCard = ({ cardData }) => {
-  let data = {
+  const { userData } = useAuth();
+  const [userDataState, setUserDataState] = useState(null);
+  const [redirectPath, setRedirectPath] = useState(null);
+
+  useEffect(() => {
+    if (userData) {
+      setUserDataState(userData);
+    }
+  }, [userData]);
+
+  const initialData = {
     message: "",
     offered_price: 0,
   };
-  let dataErrors = {
-    message: "",
-    offered_price: "",
-  };
-  const [formData, setFormData] = useState(data);
-  const [errors, setErrors] = useState(dataErrors);
+
+  const [formData, setFormData] = useState(initialData);
+  const [errors, setErrors] = useState({});
 
   const formatearFecha = (fecha) => {
     const fecha1 = new Date(fecha);
@@ -23,17 +34,16 @@ export const WorkPageCard = ({ cardData }) => {
     };
     return fecha1.toLocaleString("es", opciones);
   };
+
   const formattedDate = formatearFecha(cardData?.created_at);
 
-  const validate = (data1) => {
+  const validate = (data) => {
     let errorsObj = {};
-    if (!data1.message) {
-      errorsObj.message = "**Inserte un mensaje**";
+    if (!data.message) {
+      errorsObj.message = "inserte un mensaje";
     }
-    if (!data1.offered_price) {
-      errorsObj.offered_price = "**Inserte un presupuesto estimado**";
-    } else if (isNaN(parseFloat(data1.offered_price))) {
-      errorsObj.offered_price = "**Solo se permiten numeros**";
+    if (!data.offered_price || data.offered_price <= 0) {
+      errorsObj.offered_price = "inserte un presupuesto estimado válido";
     }
     return errorsObj;
   };
@@ -44,61 +54,72 @@ export const WorkPageCard = ({ cardData }) => {
     setErrors(validate({ ...formData, [name]: value }));
   };
 
-  const handleClick = () => {};
+  const handleClick = async () => {
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
 
-  const handleClick1 = async () => {
-    if (Object.keys(errors).length === 0) {
-      const formData = new FormData();
-      formData.append("message", formData.message);
-      formData.append("offered_price", formData.offered_price);
-      formData.append("userId", "nosetodavia");
-      formData.append("jobId", cardData.id);
+    const dataPostulations = {
+      message: formData.message,
+      offered_price: formData.offered_price,
+      userId: userDataState.id,
+      jobId: cardData.id,
+    };
+
+    if (Object.keys(validationErrors).length === 0) {
       try {
-        Swal.fire({
-          title: "Exito",
-          text: "Te has postulado exitosamente",
-          icon: "success",
-          confirmButtonText: "Genial!",
-        });
-        setFormData(data);
-        setErrors(dataErrors);
+        const data = await postPostulation(dataPostulations);
+        if (data) {
+          Swal.fire({
+            title: "¡Felicidades",
+            text: "Tu postulacion fue creada con éxito!",
+            confirmButtonText: "Aceptar",
+          }).then(() => {
+            setRedirectPath("/works");
+          });
+        }
       } catch (error) {
         Swal.fire({
-          title: "Error!",
-          text: "Hubo un problema con la postulacion, intentalo de nuevo!",
-          icon: "error",
-          confirmButtonText: "Ok",
+          title: "Ya estas postulado",
+          text: "Estas postulado en este trabajo",
+          icon: "info",
+          confirmButtonText: "Aceptar",
+        }).then(() => {
+          setRedirectPath("/works");
         });
       }
-    } else {
-      console.log(errors);
     }
   };
 
+  useEffect(() => {
+    if (redirectPath) {
+      window.location.href = redirectPath;
+    }
+  }, [redirectPath]);
+
   return (
-    <div className="bg-gray-800  min-h-screen w-4/5 my-5 rounded-2xl">
+    <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
       <div className="flex flex-col items-center">
         <div className="w-full">
-          <h2 className=" flex-end text-2xl p-2 italic text-yellow-200 ">
+          <h2 className="flex-end text-2xl p-2 italic text-yellow-200 ">
             Albañileria
           </h2>
         </div>
         <div className="m-2 flex flex-col lg:flex-row w-full">
           <div className="mx-5 lg:w-1/2 h-96 flex items-center justify-center">
             <img
-              className=" bg-white rounded max-w-fit max-h-96"
+              className="bg-white rounded max-w-fit max-h-96"
               src={cardData?.img}
               alt="ilustracion-trabajo"
             />
           </div>
-          <div className=" flex flex-col ml-4 lg:w-1/2 w-full">
+          <div className="flex flex-col ml-4 lg:w-1/2 w-full">
             <div className="w-full flex justify-center lg:justify-normal">
               <h2 className="text-5xl font-bold text-yellow-300 lg:m-0 mt-10">
                 {cardData?.name}
               </h2>
             </div>
             <div className="ASDSAD lg:flex-none lg:flex md:flex md:flex-row lg:flex-col w-full">
-              <div className="lg:w-auto w-1/2 ">
+              <div className="lg:w-auto w-1/2">
                 <h3 className="my-5 text-2xl text-yellow-300">
                   {cardData?.user?.name}
                 </h3>
@@ -107,12 +128,12 @@ export const WorkPageCard = ({ cardData }) => {
                 </h3>
               </div>
               <div>
-                <div className="flex flex-row items-center text-yellow-300  mt-3 lg:mt-0 ">
+                <div className="flex flex-row items-center text-yellow-300 mt-3 lg:mt-0">
                   <FaLocationDot size={30} />
                   <h3 className="ml-5 mr-10 text-2xl">Zárate , Buenos Aires</h3>
                 </div>
                 <h3 className="my-5 text-3xl text-yellow-300">
-                  Presupuesto:{cardData?.base_price}
+                  Presupuesto : {cardData?.base_price}
                 </h3>
               </div>
             </div>
@@ -136,12 +157,14 @@ export const WorkPageCard = ({ cardData }) => {
                   <input
                     type="text"
                     name="message"
-                    className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full  "
+                    className="bg-gray-800 h-10 border mt-1 rounded px-4 w-full"
                     placeholder="Mensaje..."
                     value={formData.message}
                     onChange={handleChange}
                   />
-                  <p className="text-yellow-500 italic">{errors.message}</p>
+                  {errors.message && (
+                    <p className="text-red-500">{errors.message}</p>
+                  )}
                 </div>
                 <div className="md:col-span-5">
                   <label className="text-yellow-500">Presupuesto</label>
@@ -152,19 +175,17 @@ export const WorkPageCard = ({ cardData }) => {
                     name="offered_price"
                     value={formData.offered_price}
                     onChange={handleChange}
-                    id="full_name"
-                    className=" bg-gray-800 h-10 border mt-1 rounded px-4 w-full "
+                    className="bg-gray-800 h-10 border mt-1 rounded px-4 w-full"
                     placeholder="00.0"
                   />
-                  <p className="text-yellow-500 italic">
-                    {errors.offered_price}
-                  </p>
+                  {errors.offered_price && (
+                    <p className="text-red-500">{errors.offered_price}</p>
+                  )}
                 </div>
-
                 <div className="md:col-span-5 text-right">
                   <div className="inline-flex items-end">
                     <button
-                      onClick={() => handleClick()}
+                      onClick={handleClick}
                       className="bg-yellow-300 text-gray-900 hover:bg-gray-700 hover:text-yellow-500 font-bold py-2 px-4 rounded"
                     >
                       Submit
