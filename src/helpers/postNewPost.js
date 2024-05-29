@@ -7,9 +7,15 @@ const JOBS_URL = process.env.NEXT_PUBLIC_API_URL_JOBS;
  *
  */
 
+const token = localStorage.getItem("token");
+
 export const postNewPublic = async (State) => {
   try {
-    const response = await axios.post(JOBS_URL, State);
+    const response = await axios.post(JOBS_URL, State, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return response.data;
   } catch (error) {

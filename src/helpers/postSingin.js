@@ -8,9 +8,19 @@ const AUTH_SIGNIN = process.env.NEXT_PUBLIC_API_URL_AUTH_SIGNIN;
  * @returns retorna el token desde el backend.
  */
 
+const token = localStorage.getItem("token");
+
 export const postEmail = async (email) => {
   try {
-    const response = await axios.post(AUTH_SIGNIN, { email });
+    const response = await axios.post(
+      AUTH_SIGNIN,
+      { email },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log("Respuesta de la API:", response);
     return response.data;
   } catch (error) {
