@@ -116,8 +116,15 @@ function ProfileClient() {
               ) : null}
               <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
                 <p className="mb-2 text-xs lg:text-lg xl:text-xl">chat</p>
+
                 <Link href="/chat">
-                  <Image src={chatImg} alt="" className="w-8 lg:w-12 xl:w-16" />
+                  <span>
+                    <Image
+                      src={chatImg}
+                      alt=""
+                      className="w-8 lg:w-12 xl:w-16"
+                    />{" "}
+                  </span>
                 </Link>
               </div>{" "}
               <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
