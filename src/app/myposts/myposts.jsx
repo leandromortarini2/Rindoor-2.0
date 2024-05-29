@@ -4,6 +4,7 @@ import { getJobIdMyPosts, getJobsMyPosts, putJobFinish, putPostulationsClose } f
 import Loader from '../../components/Loader/Loader';
 import { useAuth } from '../context/Context';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export const myposts = () => {
   const { userData } = useAuth();
@@ -54,6 +55,7 @@ export const myposts = () => {
       setJobStateProffesional({ postulante, job });
       const data = await putPostulationsClose(dataAcept);
       console.log(data, 'data put acept :::::::::::::::::::::::::::::::');
+      window.location.href= '/myposts'
     } catch (error) {
       console.log('error buttonAccept ---->', error);
     } finally {
@@ -151,36 +153,38 @@ export const myposts = () => {
                               </table>
                             </div>
                           ) : (
-                            job.postulations.map((postulation) => (
-                              postulation.status === 'closed' && (
-                                <div className="w-full flex flex-col items-center p-4" key={postulation.id}>
-                                  <h1 className="text-yellow-600 font-bold text-xl text-center">Profesional elegido:</h1>
-                                  <h2 className="text-yellow-500 font-bold text-2xl text-center">{postulation.user.name}</h2>
-                                  <p className="text-gray-300">Ciudad: {postulation.user.city}</p>
-                                  <div className="w-full flex flex-wrap justify-evenly text-gray-300">
-                                    Categorias:
-                                    {postulation.user.categories.map((category) => (
-                                      <p key={category.id}>{category.name}</p>
-                                    ))}
+                            job.postulations.some(postulation => postulation.status === 'closed') && (
+                              job.postulations.map((postulation) => (
+                                postulation.status === 'closed' && (
+                                  <div className="w-full flex flex-col items-center p-4" key={postulation.id}>
+                                    <h1 className="text-yellow-600 font-bold text-xl text-center">Profesional elegido:</h1>
+                                    <h2 className="text-yellow-500 font-bold text-2xl text-center">{postulation.user.name}</h2>
+                                    <p className="text-gray-300">Ciudad: {postulation.user.city}</p>
+                                    <div className="w-full flex flex-wrap justify-evenly text-gray-300">
+                                      Categorias:
+                                      {postulation.user.categories.map((category) => (
+                                        <p key={category.id}>{category.name}</p>
+                                      ))}
+                                    </div>
+                                    <p className="text-gray-300">Email: {postulation.user.email}</p>
+                                    <p className="text-gray-300">Telefono: {postulation.user.phone}</p>
+                                    <p className="text-gray-300">Rating: {postulation.user.rating}</p>
+                                    <div className="w-full flex justify-center mt-4">
+                                      <button
+                                        type="button"
+                                        className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+                                        onClick={() => handleButtonJobFinish(job.id, postulation.user.id)}
+                                      >
+                                        Finish Job
+                                      </button>
+                                    </div>
                                   </div>
-                                  <p className="text-gray-300">Email: {postulation.user.email}</p>
-                                  <p className="text-gray-300">Telefono: {postulation.user.phone}</p>
-                                  <p className="text-gray-300">Rating: {postulation.user.rating}</p>
-                                  <div className="w-full flex justify-center mt-4">
-                                    <button
-                                      type="button"
-                                      className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-                                      onClick={() => handleButtonJobFinish(job.id, postulation.user.id)}
-                                    >
-                                      Finish Job
-                                    </button>
-                                  </div>
-                                </div>
-                              )
-                            ))
+                                )
+                              ))
+                            )
                           )
                         ) : (
-                          <div className="w-full relative overflow-x-auto shadow-md rounded-b-xl">
+                          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
