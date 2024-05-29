@@ -42,12 +42,12 @@ export const Selector = forwardRef(({ filterWorksCategory }, ref) => {
     <div className="font-medium h-30 md:w-64 relative w-full md:px-0 px-5">
       <div
         onClick={() => {
-          if (!selected) setOpen(!open);
+          setOpen(!open);
         }}
         className={`text-yellow-500 w-full p-2 flex items-center justify-between  ${
           open ? "rounded-none" : "rounded-b"
         } ${!selected && "text-gray-700"} 
-        ${selected ? "hover:cursor-not-allowed" : "hover:cursor-pointer"}
+        hover:cursor-pointer
         `}
       >
         {selected ? selected : "Seleccione oficio"}
