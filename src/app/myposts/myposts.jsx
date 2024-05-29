@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { getJobIdMyPosts, getJobsMyPosts, putJobFinish, putPostulationsClose } from '../../helpers/helperApplicants';
 import Loader from '../../components/Loader/Loader';
 import { useAuth } from '../context/Context';
+import Swal from "sweetalert2";
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 
 export const myposts = () => {
   const { userData } = useAuth();
@@ -54,7 +54,7 @@ export const myposts = () => {
       setLoaderState(true);
       setJobStateProffesional({ postulante, job });
       const data = await putPostulationsClose(dataAcept);
-      console.log(data, 'data put acept :::::::::::::::::::::::::::::::');
+      // console.log(data, 'data put acept :::::::::::::::::::::::::::::::');
       window.location.href= '/myposts'
     } catch (error) {
       console.log('error buttonAccept ---->', error);
@@ -63,14 +63,23 @@ export const myposts = () => {
     }
   };
 
-  const handleButtonJobFinish = async (jobId, userId) => {
+  const handleButtonJobFinish = async (jobId) => {
     const dataJob = {
       jobId: jobId,
-      userId: userId,
+      userId: userDataState.id,
     };
+    console.log(jobId,'{',dataJob,'}', 'AAAAAAAAAAAAAAAA')
+
     try {
       const data = await putJobFinish(dataJob);
       console.log(data, '<<<<<<<<<<<<-------------------- D A T A JOBFINISH ');
+      Swal.fire({
+        title: "!El trabajo se ha finalizado con exito!",
+        text: "Gracias por seguir eligiendo Rin|Door",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+      window.location.href = "/myposts";
     } catch (error) {
       console.log(error, 'error jobfinish');
     }
@@ -85,7 +94,7 @@ export const myposts = () => {
           {userDataState ? (
             jobState.length > 0 ? (
               jobState.map((job) => {
-                if (job.client.id === userDataState.id) {
+                if (job.client.id === userDataState.id && job.status !== 'finished') {
                   return (
                     <div className="w-[80%] flex flex-col my-10 bg-gray-900 items-center rounded-xl" key={job.id}>
                       <div className="w-[80%] min-h-1/4 bg-gray-900 flex flex-col sm:flex-row justify-evenly items-center">
@@ -173,7 +182,7 @@ export const myposts = () => {
                                       <button
                                         type="button"
                                         className="text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-                                        onClick={() => handleButtonJobFinish(job.id, postulation.user.id)}
+                                        onClick={() => handleButtonJobFinish(job.id)}
                                       >
                                         Finish Job
                                       </button>
@@ -197,11 +206,26 @@ export const myposts = () => {
                       </div>
                     </div>
                   );
-                }
+                } else {
+                  return(
+                    <div className="w-full min-h-screen flex justify-center items-center">
+                <div className=' w-[90%] sm:w-2/3 min-h-[400px] md:min-h-[200px]  md:h-44 bg-gray-900 flex flex-col justify-evenly items-center rounded-xl shadow-gray-800 shadow-xl'>
+                   <h2 className="text-yellow-400 text-xl md:text-3xl font-bold text-center">No hay trabajos disponibles</h2>
+                   <p className=' text-white text-center text-lg md:text-xl'>Aun no tines ningun trabajo creado. Haz click en el boton y completa el formulario.</p>
+                   <Link href='/createjob'><button className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Create new job</button></Link>
+                </div>
+                  
+              </div>
+                )}
               })
             ) : (
               <div className="w-full min-h-screen flex justify-center items-center">
-                <h2 className="text-gray-300 text-2xl">No hay trabajos disponibles</h2>
+                <div className=' w-[90%] sm:w-2/3 min-h-[400px] md:min-h-[200px]  md:h-44 bg-gray-900 flex flex-col justify-evenly items-center rounded-xl shadow-gray-800 shadow-xl'>
+                   <h2 className="text-yellow-400 text-xl md:text-3xl font-bold text-center">No hay trabajos disponibles</h2>
+                   <p className=' text-white text-center text-lg md:text-xl'>Aun no tines ningun trabajo creado. Haz click en el boton y completa el formulario.</p>
+                   <Link href='/createjob'><button className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Create new job</button></Link>
+                </div>
+               
               </div>
             )
           ) : (
