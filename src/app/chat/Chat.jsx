@@ -5,14 +5,16 @@ import { io } from "socket.io-client";
 import { chats } from "./data";
 import { useAuth } from "../context/Context";
 import Swal from "sweetalert2";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Loader from "../../components/Loader/Loader";
 import pic from "../../assets/login.svg";
+
 const img =
   "https://kottke.org/cdn-cgi/image/format=auto,fit=scale-down,width=1200,metadata=none/plus/misc/images/ai-faces-01.jpg";
 const socket = io("https://rindoor-backend.onrender.com", {
   autoConnect: false,
 });
+
 const pruebaContact = [
   { name: "kusei" },
   { name: "kusei" },
@@ -35,6 +37,26 @@ const pruebaContact = [
   { name: "kusei" },
   { name: "kusei" },
 ];
+const userPrueba = {
+  id: "8c3255b0-3262-4135-b479-f1266f61d956",
+  isActive: true,
+  banned: false,
+  name: "OLVADIS HERNANDEZ LEDESMA",
+  email: "olvadishernandezledesma@gmail.com",
+  phone: "3233342333",
+  country: "Argentina",
+  province: "Neuquén",
+  city: "Buenos Aires",
+  address: "CL 99B #98A B Chinita",
+  coords: "-34.6158038,-58.4571143",
+  rating: 5,
+  role: "CLIENT",
+  planId: null,
+  customerId: null,
+  subscriptionId: null,
+  categories: [],
+};
+
 const ShowChat = ({ messages, userTo }) => {
   const converToTime = (dateToConver) => {
     const date = new Date(dateToConver);
@@ -61,11 +83,11 @@ const ShowChat = ({ messages, userTo }) => {
         <h2 className="text-3xl my-5 ">{userTo?.name}</h2>
       </div>
       <div className="">
-        <div ref={containerRef} className=" w-full h-[25rem] overflow-auto ">
+        <div ref={containerRef} className=" w-full h-[29rem] overflow-auto ">
           {messages.map((message, index) => (
             <div key={index}>
               {message.from.id !== `${userTo.id}` ? (
-                <div className="w-full flex justify-end my-5 pr-1 ">
+                <div className="w-full flex justify-end mt-5 pr-1 ">
                   <div className="w-3/4 flex justify-end">
                     <div className="px-4 py-2 rounded bg-gray-700 ">
                       {message.message}
@@ -76,7 +98,7 @@ const ShowChat = ({ messages, userTo }) => {
                   </div>
                 </div>
               ) : (
-                <div className="w-full flex justify-start  my-5 ">
+                <div className="w-full flex justify-start  mt-5 ">
                   <div className="w-3/4 flex justify-start">
                     <div className="px-4 py-2 rounded bg-gray-600  ">
                       {message.message}
@@ -99,22 +121,49 @@ export const Chat = () => {
 
   const { userData } = useAuth();
   const [mensaje, setMensaje] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(null);
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [chat, setChat] = useState(null);
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(null);
   const [userTo, setUserTo] = useState(null);
   const [userFrom, setUserFrom] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!userData) {
+        Swal.fire({
+          title: "Espera!",
+          text: "Para crear una publicacion debes completar tus datos",
+          icon: "info",
+          confirmButtonText: "Completar",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            router.push("/update");
+          }
+        });
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [userData]);
+
+  useEffect(() => {
+    if (userData === "ban") {
+      Swal.fire({
+        title: "Usuario Banneado!",
+        text: "Tu cuenta ha sido suspendida temporalmente debido a actividades que infringen nuestras políticas. Por favor, contáctanos para obtener más información y resolver esta situación lo antes posible.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      redirect("/");
+    }
     if (userData) {
-      console.log("sospechoso 1");
       setUserFrom(userData);
       setIsLoading(false);
     }
   }, [userData]);
   useEffect(() => {
-    console.log("sospechoso 2");
     if (userTo) {
       socket.emit("joinRoom", {
         userFrom: userFrom.id,
@@ -148,7 +197,6 @@ export const Chat = () => {
   }, [contacts, userFrom, userTo]);
 
   useEffect(() => {
-    console.log("sospechoso 2");
     if (!isLoading) {
       socket.on("connect", () => {
         socket.emit("start", {
@@ -157,7 +205,7 @@ export const Chat = () => {
         setIsConnected(true);
       });
 
-      socket.on(`contacts_${userFrom.id}`, (e) => {
+      socket.on(`contacts_${userFrom?.id}`, (e) => {
         console.log(e);
         setContacts(e);
         setUserTo(e[0]);
@@ -200,45 +248,51 @@ export const Chat = () => {
         <Loader />
       ) : (
         <div className="w-full  bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300 flex flex-col justify-evenly items-center">
-          <div className="bg-gray-800 w-full md:w-3/4 flex h-[35rem] flex flex-row  border border-gray-400 ">
-            <div className="w-2/6 border-r border-gray-400  h-[35rem] b ">
+          <div className="bg-gray-800 w-full md:w-3/4 flex h-[39rem] flex flex-row  border border-gray-400 ">
+            <div className="w-2/6 border-r border-gray-400  h-[39rem] b ">
               <div className="text-yellow-300 text-3xl border-b-2 border-gray-600 w-full h-20 flex items-center justify-center">
                 Chats
               </div>
-              <div className="py-2  h-[29.9rem] overflow-auto ">
-                {contacts.map((contact, index) => (
-                  <a
-                    className="w-full h-16 rounded-full hover:bg-gray-600 hover:cursor-pointer flex items-center lg:flex-row flex-col  "
-                    key={index}
-                    onClick={() => setUserTo(contact)}
-                  >
-                    <div className="w-1/4 h-16 flex items-center lg:justify-normal justify-center">
-                      <Image
-                        className="m-3 rounded-full max-w-12 max-h-12 min-w-12 min-h-12 border border-white "
-                        src={pic}
-                        alt="foto_de_perfil"
-                      />
-                    </div>
-                    <div className="font-bold lg:w-full w-auto ">
-                      {contact.name}
-                    </div>
-                  </a>
-                ))}
+              <div className="py-2  h-[34rem] overflow-auto ">
+                {contacts?.length ? (
+                  contacts?.map((contact, index) => (
+                    <a
+                      className="w-full h-16 rounded-full hover:bg-gray-600 hover:cursor-pointer flex items-center lg:flex-row flex-col  "
+                      key={index}
+                      onClick={() => setUserTo(contact)}
+                    >
+                      <div className="w-1/4 h-16 flex items-center lg:justify-normal justify-center">
+                        <Image
+                          className="m-3 rounded-full max-w-12 max-h-12 min-w-12 min-h-12 border border-white "
+                          src={pic}
+                          alt="foto_de_perfil"
+                        />
+                      </div>
+                      <div className="font-bold lg:w-full w-auto ">
+                        {contact.name}
+                      </div>
+                    </a>
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center h-full w-full">
+                    <div>No hay contactos.</div>
+                  </div>
+                )}
               </div>
             </div>
-            <div className=" h-[35rem] flex w-4/6 items-center flex-col ">
+            <div className=" h-[39rem] flex w-4/6 items-center flex-col ">
               {messages ? (
                 <div className="h-5/6 w-full">
                   <ShowChat messages={messages} userTo={userTo} key={2} />
                 </div>
               ) : (
-                <div className=" flex w-4/6 items-center justify-center ">
-                  Selecciona un chat para abrir
+                <div className=" h-5/6 flex w-4/6 items-center justify-center ">
+                  Selecciona un chat para abrir.
                 </div>
               )}
 
               <div className="h-1/6 w-full flex items-center p-4">
-                {messages ? (
+                {messages?.length ? (
                   <>
                     <input
                       className="w-full p-2 border border-gray-300 rounded text-black "
