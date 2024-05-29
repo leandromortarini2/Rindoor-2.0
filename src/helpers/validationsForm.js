@@ -1,9 +1,10 @@
 /**
+ * Realiza validaciones para un nuevo post.
  *
- * @param {string | number | null} input  es el dato que llega desde los formularios.
- * @returns
+ * @function validationsNewPost
+ * @param {Object} input - Datos del formulario para un nuevo post.
+ * @returns {Object} Objeto que contiene los errores de validación.
  */
-
 export const validationsNewPost = (input) => {
   const errors = {};
 

@@ -1,11 +1,4 @@
 import axios from "axios";
-/**
- * getUsers trae todos los usuarios registrados
- *
- * deleteUsers elimina un usuario
- * @param {string} url necesita la url con el ID del usuario a eliminar
- *
- */
 
 const URL_USERS = process.env.NEXT_PUBLIC_API_URL_USERS;
 const URL_BANNED_USER = process.env.NEXT_PUBLIC_API_URL_BANNED_USER;
@@ -25,14 +18,17 @@ const token = localStorage.getItem("token");
 // USERS
 // USERS
 // USERS
-// export const getUsers = async () => {
-//   try {
-//     const res = await axios.get(URL_USERS);
-//     return res.data;
-//   } catch (error) {
-//     console.log(error, "fallo");
-//   }
-// };
+
+/**
+ * Obtiene todos los usuarios registrados paginados.
+ *
+ * @async
+ * @function getUsers
+ * @param {number} page - Número de página que se desea obtener.
+ * @param {number} pageSize - Cantidad de usuarios por página.
+ * @returns {Promise<Object>} Los datos de los usuarios en la página especificada.
+ *
+ */
 
 export const getUsers = async (page, pageSize) => {
   try {
@@ -45,7 +41,14 @@ export const getUsers = async (page, pageSize) => {
   }
 };
 
-// helpers/adminUsers.js
+/**
+ * Prohíbe a un usuario.
+ *
+ * @async
+ * @function banUser
+ * @param {string} id - ID del usuario a prohibir.
+ * @returns {Promise<Object>} Resultado de la acción de prohibir.
+ */
 
 export const banUser = async (id) => {
   const token = localStorage.getItem("token");
@@ -74,6 +77,14 @@ export const banUser = async (id) => {
 // POST
 // POST
 // POST
+
+/**
+ * Obtiene todas las publicaciones.
+ *
+ * @async
+ * @function getPosts
+ * @returns {Promise<Object>} Los datos de las publicaciones.
+ */
 export const getPosts = async () => {
   try {
     const res = await axios.get(URL_JOBS);
@@ -83,6 +94,14 @@ export const getPosts = async () => {
   }
 };
 
+/**
+ * Prohíbe una publicación.
+ *
+ * @async
+ * @function banPost
+ * @param {string} id - ID de la publicación a prohibir.
+ * @returns {Promise<Object>} Resultado de la acción de prohibir.
+ */
 export const banPost = async (id) => {
   const token = localStorage.getItem("token");
   try {
@@ -105,6 +124,14 @@ export const banPost = async (id) => {
 //! CATEGORIES
 //! CATEGORIES
 //! CATEGORIES
+
+/**
+ * Obtiene todas las categorías.
+ *
+ * @async
+ * @function getCategory
+ * @returns {Promise<Object>} Los datos de las categorías.
+ */
 export const getCategory = async () => {
   try {
     const res = await axios.get(URL_CATEGORY);
@@ -117,6 +144,15 @@ export const getCategory = async () => {
 // ?
 // ?
 // ?
+
+/**
+ * Elimina una categoría.
+ *
+ * @async
+ * @function deleteCategory
+ * @param {string} id - ID de la categoría a eliminar.
+ * @returns {Promise<Object>} Resultado de la acción de eliminar.
+ */
 export const deleteCategory = async (id) => {
   try {
     const res = await axios.delete(`${URL_CATEGORY}/${id}`);
@@ -130,6 +166,16 @@ export const deleteCategory = async (id) => {
 // ?
 // ?
 // ?
+
+/**
+ * Edita una categoría.
+ *
+ * @async
+ * @function editCategories
+ * @param {string} id - ID de la categoría a editar.
+ * @param {Object} formData - Datos actualizados de la categoría.
+ * @returns {Promise<Object>} Resultado de la acción de editar.
+ */
 export const editCategories = async (id, formData) => {
   const token = localStorage.getItem("token");
   try {
@@ -147,6 +193,16 @@ export const editCategories = async (id, formData) => {
 // ?
 // ?
 // ?
+
+/**
+ * Crea una nueva categoría.
+ *
+ * @async
+ * @function createCategoryAPI
+ * @param {Object} formData - Datos de la nueva categoría.
+ * @returns {Promise<Object>} Resultado de la acción de crear.
+ */
+
 export const createCategoryAPI = async (formData) => {
   const token = localStorage.getItem("token");
   try {
@@ -168,6 +224,15 @@ export const createCategoryAPI = async (formData) => {
 // #### subscriptions
 // #### subscriptions
 // #### subscriptions
+
+/**
+ * Obtiene todas las suscripciones.
+ *
+ * @async
+ * @function getSubscriptions
+ * @returns {Promise<Object>} Los datos de las suscripciones.
+ * @throws Will throw an error if the request fails.
+ */
 
 export const getSubscriptions = async () => {
   const token = localStorage.getItem("token");

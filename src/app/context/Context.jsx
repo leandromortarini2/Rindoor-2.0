@@ -3,6 +3,14 @@ import { useSession } from "next-auth/react";
 import { postEmail } from "../../helpers/postSingin";
 import { decoToken } from "../../helpers/decoToken";
 
+/**
+ * Proveedor de contexto de autenticación para la aplicación.
+ *
+ * @component AuthProvider
+ * @param {Object} props - Propiedades del componente.
+ * @returns {JSX.Element} Proveedor de contexto de autenticación.
+ */
+
 // Crear el contexto de autenticación
 const AuthContext = createContext({
   userData: null,
