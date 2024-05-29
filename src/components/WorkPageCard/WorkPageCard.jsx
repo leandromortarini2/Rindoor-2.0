@@ -51,31 +51,33 @@ export const WorkPageCard = ({ cardData }) => {
   const handleClick = async () => {
     const validationErrors = validate(formData);
     setErrors(validationErrors);
-
+  
     const dataPostulations = {
       message: formData.message,
       offered_price: formData.offered_price,
       userId: userDataState.id,
       jobId: cardData.id,
     };
-
+  
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const data = await postPostulation(dataPostulations);
-        if (data) {
+        const response = await postPostulation(dataPostulations);
+        if (response.success) {
           Swal.fire({
-            title: "¡Felicidades",
-            text: "Tu postulacion fue creada con éxito!",
+            title: "¡Felicidades!",
+            text: "Tu postulación fue creada con éxito!",
             confirmButtonText: "Aceptar",
           }).then(() => {
             setRedirectPath("/works");
           });
+        } else {
+          throw new Error(response.message || "Error en la postulación");
         }
       } catch (error) {
         Swal.fire({
-          title: "Ya estas postulado",
-          text: "Estas postulado en este trabajo",
-          icon: "info",
+          title: "Error",
+          text: "Sus categorías no coinciden con este trabajo.",
+          icon: "error",
           confirmButtonText: "Aceptar",
         }).then(() => {
           setRedirectPath("/works");
