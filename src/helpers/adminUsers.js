@@ -12,6 +12,7 @@ const URL_BANNED_USER = process.env.NEXT_PUBLIC_API_URL_BANNED_USER;
 const URL_JOBS = process.env.NEXT_PUBLIC_API_URL_JOBS;
 const URL_BANNED_JOB = process.env.NEXT_PUBLIC_API_URL_BANNED_JOB;
 const URL_CATEGORY = process.env.NEXT_PUBLIC_API_URL_CATEGORY;
+const URL_SUBSCRIPTION = process.env.NEXT_PUBLIC_API_URL_SUBSCRIPTION;
 
 const token = localStorage.getItem("token");
 
@@ -158,5 +159,26 @@ export const createCategoryAPI = async (formData) => {
   } catch (error) {
     console.error("Error al crear la categoría ", error);
     return { error: true, message: error.message };
+  }
+};
+
+// #### subscriptions
+// #### subscriptions
+// #### subscriptions
+// #### subscriptions
+// #### subscriptions
+// #### subscriptions
+
+export const getSubscriptions = async () => {
+  const token = localStorage.getItem("token");
+  try {
+    const res = await axios.get(URL_SUBSCRIPTION, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error, "fallo");
   }
 };
