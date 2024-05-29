@@ -1,11 +1,14 @@
 import axios from "axios";
 
 const AUTH_SIGNIN = process.env.NEXT_PUBLIC_API_URL_AUTH_SIGNIN;
-
 /**
- * Esta funcion recibe el email del usuario y devuelve el token con los datos del usuario.
- * @param {string} email recibe el email desde useSession
- * @returns retorna el token desde el backend.
+ * Envía una solicitud de inicio de sesión por correo electrónico.
+ *
+ * @async
+ * @function postEmail
+ * @param {string} email - Dirección de correo electrónico del usuario.
+ * @returns {Promise<Object>} La respuesta de la solicitud de inicio de sesión.
+ * @throws Will throw an error if the request fails.
  */
 
 export const postEmail = async (email) => {
