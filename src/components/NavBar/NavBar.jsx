@@ -88,11 +88,13 @@ export const NavBar = () => {
               About
             </button>
           </Link>
-          <Link href="/createjob">
-            <button className="xl:text-xl text-yellow-500 font-semibold duration-1000 hover:text-yellow-300 hover:scale-110">
-              Create job
-            </button>
-          </Link>
+          {session ? (
+            <Link href="/createjob">
+              <button className="xl:text-xl text-yellow-500 font-semibold duration-1000 hover:text-yellow-300 hover:scale-110">
+                Create job
+              </button>
+            </Link>
+          ) : null}
         </div>
         {/* CONTAINER LOGIN */}
         <div className="hidden  w-1/4 h-14 lg:flex justify-evenly items-center">
@@ -142,12 +144,14 @@ export const NavBar = () => {
                     Subscription
                   </button>
                 </Link>
+                {userData?.role === "ADMIN" ? (
+                  <Link href="/admin">
+                    <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                      Admin
+                    </button>
+                  </Link>
+                ) : null}
 
-                <Link href="/admin">
-                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                    Admin
-                  </button>
-                </Link>
                 <button
                   onClick={async () => {
                     await signOut({
@@ -175,7 +179,7 @@ export const NavBar = () => {
       {/*  */}
       {/* CONTAINER MENU BURGER */}
       {burger === true ? (
-        <div className="w-full bg-slate-600 min-h-40 lg:hidden absolute z-20">
+        <div className="w-full bg-slate-600 min-h-80 lg:hidden absolute z-20">
           <div className="w-full flex flex-col justify-evenly items-center h-[150px] ">
             {" "}
             <Link href="/">
@@ -195,35 +199,39 @@ export const NavBar = () => {
                 About
               </button>
             </Link>
-            <Link href="/createjob">
-              {" "}
-              <button className="text-md text-yellow-500 font-medium duration-1000 hover:text-yellow-300 hover:scale-110">
-                Create job
-              </button>
-            </Link>
+            {session ? (
+              <Link href="/createjob">
+                <button className="text-md text-yellow-500 font-medium duration-1000 hover:text-yellow-300 hover:scale-110">
+                  Create job
+                </button>
+              </Link>
+            ) : null}{" "}
           </div>
 
-          <div className="w-full flex  justify-evenly items-center h-[100px] ">
+          <div className="w-full  flex flex-wrap  justify-evenly items-center min-h-[100px]  ">
             {session ? (
               <>
                 <Link href="/profile">
-                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                  <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Profile
                   </button>
                 </Link>
                 <Link href="/subscription">
-                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                  <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Subscription
                   </button>
                 </Link>
-                <Link href="/admin">
-                  <button className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
-                    Admin
-                  </button>
-                </Link>
+                {userData?.role === "ADMIN" ? (
+                  <Link href="/admin">
+                    <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                      Admin
+                    </button>
+                  </Link>
+                ) : null}
+
                 <button
                   onClick={handleSignOut}
-                  className="w-[100px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+                  className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
                 >
                   Logout
                 </button>

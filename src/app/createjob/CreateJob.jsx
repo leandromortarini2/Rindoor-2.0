@@ -14,6 +14,16 @@ const CreateJob = () => {
 
   // Actualizar el userId cada vez que userData cambie
   useEffect(() => {
+    if (userData === "ban") {
+      Swal.fire({
+        title: "Usuario Banneado!",
+        text: "Tu cuenta ha sido suspendida temporalmente debido a actividades que infringen nuestras políticas. Por favor, contáctanos para obtener más información y resolver esta situación lo antes posible.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      redirect("/");
+    }
+
     if (userData) {
       setUserId(userData.id);
     }
@@ -149,8 +159,8 @@ const CreateJob = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col justify-start items-center bg-gradient-to-r from-yellow-300 via-yellow-100 to-yellow-300">
-      <div className="w-full min-h-screen flex flex-col md:flex-row justify-center items-center">
-        <div className="w-full sm:w-1/2 md:w-1/3 md:h-[400px] lg:h-[450px] overflow-hidden sm:flex items-center justify-center shadow-2xl md:shadow-black md:rounded-l-xl">
+      <div className="w-full min-h-screen flex flex-col md:flex-row justify-center items-center md:m-10">
+        <div className="w-full sm:w-1/2 md:w-1/3 md:h-[500px] lg:h-[600px] overflow-hidden sm:flex items-center justify-center shadow-2xl  md:rounded-l-xl">
           <img
             src="https://res.cloudinary.com/dtwiog6cy/image/upload/v1715265952/Proyecto%20FInal/p8glimcbog6egt4nihcg.jpg"
             alt=""
@@ -162,10 +172,10 @@ const CreateJob = () => {
             className="w-full h-full sm:hidden"
           />
         </div>
-        <div className="w-full sm:w-1/2 md:w-1/3 h-full flex justify-center items-center border-b-4 border-yellow-500 sm:border-0">
+        <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 h-[600px] flex justify-center items-center border-b-4 border-yellow-500 sm:border-0">
           <form
             onSubmit={handleSubmit}
-            className="w-full h-full md:h-[400px] lg:h-[450px] bg-gray-900 flex flex-col items-center justify-evenly shadow-2xl md:shadow-black sm:mb-10 sm:rounded-b-xl md:rounded-none md:m-0 md:rounded-r-xl"
+            className="w-full h-full md:h-[500px] lg:h-[600px] bg-gray-900 flex flex-col items-center justify-evenly shadow-2xl md:shadow-black sm:mb-10 sm:rounded-b-xl md:rounded-none md:m-0 md:rounded-r-xl"
           >
             <h2 className="text-yellow-500 text-xl xl:text-3xl font-semibold mt-5">
               Create a new Post

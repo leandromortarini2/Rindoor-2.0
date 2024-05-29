@@ -20,16 +20,28 @@ export const AuthProvider = ({ children }) => {
           // Enviar el correo electrónico para obtener el token
           const token = await postEmail(session.user.email);
 
+          localStorage.setItem("token", token);
+
+          // sessionStorage.setItem("token", token);
+
+          // Verificar si token es un string
+          if (
+            typeof token !== "string" &&
+            token.message === "usuario baneado"
+          ) {
+            setUserData("ban");
+            // console.error("es por acaaaaaa");
+
+            return;
+          }
+
           // Decodificar el token para obtener la data del usuario
           const tokenData = decoToken(token);
           // console.log("Data del token decodificado:", tokenData);
 
-          // Verificar que tokenData sea un objeto válido
+          // Verificar si tokenData es un objeto válido
           if (tokenData && typeof tokenData === "object") {
-            setUserData((prevUserData) => {
-              // console.log("======================", prevUserData);
-              return tokenData;
-            });
+            setUserData(tokenData);
           } else {
             console.error("Token data no es un objeto válido:", tokenData);
           }

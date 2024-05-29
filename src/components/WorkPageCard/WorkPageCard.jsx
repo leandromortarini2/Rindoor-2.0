@@ -1,11 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
-import { postPostulation } from "../../helpers/helperWorksPage";
-import { useAuth } from "../../app/context/Context";
-import Swal from "sweetalert2";
-import { redirect } from "next/navigation";
-
 export const WorkPageCard = ({ cardData }) => {
   const { userData } = useAuth();
   const [userDataState, setUserDataState] = useState(null);
@@ -94,7 +89,7 @@ export const WorkPageCard = ({ cardData }) => {
     if (redirectPath) {
       window.location.href = redirectPath;
     }
-  }, [redirectPath]);
+  };
 
   return (
     <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
@@ -130,7 +125,9 @@ export const WorkPageCard = ({ cardData }) => {
               <div>
                 <div className="flex flex-row items-center text-yellow-300 mt-3 lg:mt-0">
                   <FaLocationDot size={30} />
-                  <h3 className="ml-5 mr-10 text-2xl">Zárate , Buenos Aires</h3>
+                  <h3 className="ml-5 mr-10 text-2xl">
+                    Zárate , Buenos Aires
+                  </h3>
                 </div>
                 <h3 className="my-5 text-3xl text-yellow-300">
                   Presupuesto : {cardData?.base_price}

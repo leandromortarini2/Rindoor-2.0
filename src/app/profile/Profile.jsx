@@ -4,11 +4,13 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import PostImg from "../../assets/loudspeaker.svg";
 import chatImg from "../../assets/chat.svg";
-import updateImg from "../../assets/user.svg";
+import adminImg from "../../assets/manager.svg";
 import subsciptionImg from "../../assets/document.svg";
 import { useAuth } from "../context/Context";
 import { useEffect, useState } from "react";
 import { getCategory } from "../../helpers/getCategory";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 function ProfileClient() {
   const { data: session } = useSession();
@@ -16,6 +18,16 @@ function ProfileClient() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    if (userData === "ban") {
+      Swal.fire({
+        title: "Usuario Banneado!",
+        text: "Tu cuenta ha sido suspendida temporalmente debido a actividades que infringen nuestras políticas. Por favor, contáctanos para obtener más información y resolver esta situación lo antes posible.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      redirect("/");
+    }
+
     const fetchCategory = async () => {
       try {
         const categoryData = await getCategory();
@@ -90,12 +102,18 @@ function ProfileClient() {
             </div>
 
             <div className="w-full xl:w-3/4 flex flex-wrap justify-center xl:max-w-[500px]">
-              <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
-                <p className="mb-2 text-xs lg:text-lg xl:text-xl">my posts</p>
-                <Link href="">
-                  <Image src={PostImg} alt="" className="w-8 lg:w-12 xl:w-16" />
-                </Link>
-              </div>
+              {userData?.role === "CLIENT" ? (
+                <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
+                  <p className="mb-2 text-xs lg:text-lg xl:text-xl">my posts</p>
+                  <Link href="/myposts">
+                    <Image
+                      src={PostImg}
+                      alt=""
+                      className="w-8 lg:w-12 xl:w-16"
+                    />
+                  </Link>
+                </div>
+              ) : null}
               <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
                 <p className="mb-2 text-xs lg:text-lg xl:text-xl">chat</p>
                 <Link href="">
@@ -116,6 +134,20 @@ function ProfileClient() {
                   </span>
                 </Link>
               </div>
+              {userData?.role === "ADMIN" ? (
+                <div className="w-20 h-20 lg:w-32 lg:h-24 xl:w-52 xl:h-40 flex flex-col justify-center items-center xl:text-xl text-gray-600 border p-1 rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-900 hover:text-yellow-500 m-3 capitalize shadow-black shadow-lg">
+                  <p className="mb-2 text-xs lg:text-lg xl:text-xl">Admin</p>
+                  <Link href="/admin">
+                    <span>
+                      <Image
+                        src={adminImg}
+                        alt=""
+                        className="w-10 lg:w-14 xl:w-20"
+                      />
+                    </span>
+                  </Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
