@@ -7,8 +7,13 @@ const URL_SUBSCRIPTION_CANCEL= process.env.NEXT_PUBLIC_API_URL_SUBSCRIPTION_CANC
 const URL_SUBSCRIPTION_PLANS= process.env.NEXT_PUBLIC_API_URL_SUBSCRIPTION_PLANS
 
 export const getSubscription = async () => {
+    const token = localStorage.getItem("token");
     try {
-        const response= await axios.get(URL_SUBSCRIPTION_PLANS)
+        const response= await axios.get(URL_SUBSCRIPTION_PLANS,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
         // console.log(response.data)
         return response.data
     } catch (error) {
@@ -17,9 +22,14 @@ export const getSubscription = async () => {
 }
 
 export const postSubscription = async (plan) => {
+    const token = localStorage.getItem("token");
     try {
         console.log('plan helper', plan)
-        const response = await axios.post(URL_SUBSCRIPTION, plan )
+        const response = await axios.post(URL_SUBSCRIPTION, plan ,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
         console.log('response post', response.data)
         return response.data
     } catch (error) {

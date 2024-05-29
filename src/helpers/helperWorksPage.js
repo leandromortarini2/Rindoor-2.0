@@ -16,10 +16,15 @@ export async function getWorkById(id) {
 
 //comentario
 
-export const postPostulation = async (data) => {
+export const postPostulation = async (data) => {    
+  const token = localStorage.getItem("token");
   try{
     console.log(data, 'data que recibe el helper')
-    const response = await axios.post(URL_API_POSTULATIONS, data)
+    const response = await axios.post(URL_API_POSTULATIONS, data,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
     console.log(response.data, 'response.data helper postulations')
     return response.data
   } catch (error) {

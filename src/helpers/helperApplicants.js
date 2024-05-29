@@ -2,6 +2,8 @@ import axios from "axios"
 
 const URL_JOBS = process.env.NEXT_PUBLIC_API_URL_JOBS
 const URL_JOBS_FINISH = process.env.NEXT_PUBLIC_API_URL_JOBS_FINISH
+const URL_POSTULATIONS_CLOSE = process.env.NEXT_PUBLIC_API_URL_POSTULATIONS_CLOSE
+const URL_USERS = process.env.NEXT_PUBLIC_API_URL_USERS
 
 /** esta funcion hace un solicitud get a /jobs para traerse de la base de datos, un array de todos los trabajos que hay guardados. 
  * devuelve ese array de
@@ -33,11 +35,41 @@ export const getJobIdMyPosts = async (id) => {
  * Esta funcion recibe por parametros un jobId y userId. Hace una solicitud PUT a '/jobs/finish', enviando esos parametros, y devuelve ...
  */
 export const putJobFinish = async (jobData) => {
+    const token = localStorage.getItem("token");
     try {
-        const response = await axios.put(URL_JOBS_FINISH, jobData)
+        const response = await axios.put(URL_JOBS_FINISH, jobData,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
         console.log('response.data job finish ---->', response.data)
         return response.data
     } catch (error) {
        console.log(error) 
     }
 }
+
+export const putPostulationsClose = async (data) => {
+    const token = localStorage.getItem("token");
+    try {
+        const response = await axios.put(URL_POSTULATIONS_CLOSE, data,{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        console.log(response.data, 'response.data put close')
+        return response.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getUserById = async (id) => {
+    try {
+      const res = await axios.get(`${URL_USERS}/${id}`);
+      return res.data;
+    } catch (error) {
+      console.error(`Error al obtener el usuario con ID ${id}:`, error);
+      return { error: true, message: error.message };
+    }
+  };
