@@ -16,19 +16,23 @@ export async function getWorkById(id) {
 
 //comentario
 
-export const postPostulation = async (data) => {    
+export const postPostulation = async (data) => {
   const token = localStorage.getItem("token");
-  try{
-    console.log(data, 'data que recibe el helper')
-    const response = await axios.post(URL_API_POSTULATIONS, data,{
+  try {
+    console.log(data, 'data que recibe el helper');
+    const response = await axios.post(URL_API_POSTULATIONS, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    console.log(response.data, 'response.data helper postulations')
-    return response.data
+    });
+    console.log(response.data, 'response.data helper postulations');
+    return { success: true, data: response.data };
   } catch (error) {
-    console.log(error, 'error postPostulation')
-    return error.message
+    console.log(error, 'error postPostulation');
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+      statusCode: error.response?.data?.statusCode,
+    };
   }
-}
+};
