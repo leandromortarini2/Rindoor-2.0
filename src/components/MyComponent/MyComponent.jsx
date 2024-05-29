@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../../app/context/Context";
 
 import {
   GoogleMap,
@@ -9,30 +8,30 @@ import {
   LoadScript,
 } from "@react-google-maps/api";
 
-const containerStyle = {
-  width: "400px",
-  height: "400px",
-};
-
-export function MyComponent() {
-  const { userData } = useAuth();
+export function MyComponent({ coords }) {
   const [coordenadas, setCoordenadas] = useState({
-    lat: "",
-    lng: "",
+    lat: null,
+    lng: null,
   });
+  const containerStyle = {
+    width: "400px",
+    height: "400px",
+  };
 
   useEffect(() => {
-    if (userData && userData.coord) {
-      const array = userData.coord.split(",");
-      if (array.length === 2) {
-        const lat = array[0];
-        const lng = array[1];
-        setCoordenadas({ lat, lng });
-      } else {
-        console.error("Formato de coordenadas incorrecto:", userData.coord);
-      }
+    if (coords) {
+      console.log(coords);
+      const numerosStr = coords.split(",");
+      const numerosFloat = numerosStr.map((numero) =>
+        parseFloat(numero.trim())
+      );
+      const lat = numerosFloat[0];
+      const lng = numerosFloat[1];
+      setAnotherPosition({ lat, lng });
+    } else {
+      console.error("Formato de coordenadas incorrecto:", coords.coord);
     }
-  }, [userData]);
+  }, [coords]);
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -41,10 +40,7 @@ export function MyComponent() {
 
   const [map, setMap] = useState(null);
   const [currentPosition, setCurrentPosition] = useState(null);
-  const [anotherPosition, setAnotherPosition] = useState({
-    lat: -34.7517406,
-    lng: -58.4332683,
-  });
+  const [anotherPosition, setAnotherPosition] = useState();
   const [directions, setDirections] = useState(null);
   const [distance, setDistance] = useState(null);
 
@@ -123,7 +119,9 @@ export function MyComponent() {
             <Marker position={anotherPosition} />
             {directions && <DirectionsRenderer directions={directions} />}
           </GoogleMap>
-          <p>{distance && <p>Distancia: {distance.toFixed(2)} km</p>}</p>
+          <div className="w-[400px] flex justify-end">
+            <p>{distance && <p>Distancia: {distance.toFixed(2)} km</p>}</p>
+          </div>
         </>
       ) : (
         <></>
