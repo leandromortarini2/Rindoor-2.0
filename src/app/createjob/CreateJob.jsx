@@ -43,15 +43,19 @@ const CreateJob = () => {
   });
 
   useEffect(() => {
-    if (!userData) {
-      Swal.fire({
-        title: "Espera!",
-        text: "Para crear una publicacion debes completar tus datos",
-        icon: "info",
-        confirmButtonText: "Completar",
-      });
-      redirect("/update");
-    }
+    const timer = setTimeout(() => {
+      if (!userData) {
+        Swal.fire({
+          title: "Espera!",
+          text: "Para crear una publicacion debes completar tus datos",
+          icon: "info",
+          confirmButtonText: "Completar",
+        });
+        redirect("/update");
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [userData]);
 
   useEffect(() => {

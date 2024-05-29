@@ -29,15 +29,28 @@ const Subscriptions = () => {
   }, []);
 
   useEffect(() => {
-    if (userData?.role !== "ADMIN") {
-      Swal.fire({
-        title: "Alto!",
-        text: "El acceso negado",
-        icon: "error",
-        confirmButtonText: "Completar",
-      });
-      redirect("/");
-    }
+    const timer = setTimeout(() => {
+      const checkUserRole = () => {
+        setLoaderState(true);
+        try {
+          if (userData?.role !== "ADMIN") {
+            Swal.fire({
+              title: "Alto!",
+              text: "El acceso negado",
+              icon: "error",
+              confirmButtonText: "Completar",
+            }).then(() => {
+              redirect("/");
+            });
+          }
+        } finally {
+          setLoaderState(false);
+        }
+      };
+      checkUserRole();
+    }, 1000); // Esperar 1 segundo antes de verificar
+
+    return () => clearTimeout(timer); // Limpiar el temporizador en el desmontaje
   }, [userData]);
 
   return (
