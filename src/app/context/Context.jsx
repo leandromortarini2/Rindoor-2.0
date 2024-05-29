@@ -20,6 +20,10 @@ export const AuthProvider = ({ children }) => {
           // Enviar el correo electrónico para obtener el token
           const token = await postEmail(session.user.email);
 
+          localStorage.setItem("token", token);
+
+          // sessionStorage.setItem("token", token);
+
           // Verificar si token es un string
           if (
             typeof token !== "string" &&
