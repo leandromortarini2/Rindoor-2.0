@@ -5,15 +5,9 @@ import axios from "axios";
 
 const AUTH_SIGNUP_URL = process.env.NEXT_PUBLIC_API_URL_AUTH_SIGNUP;
 
-const token = localStorage.getItem("token");
-
 export const postRegister = async (State) => {
   try {
-    const response = await axios.post(AUTH_SIGNUP_URL, State, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(AUTH_SIGNUP_URL, State);
 
     return response.data;
   } catch (error) {
