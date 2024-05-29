@@ -15,12 +15,13 @@ const Works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);
   const [worksData, setWorksData] = useState([]);
   const [params, setParams] = useState({});
+  const [auxiliarParams, setAuxiliarParams] = useState({});
   const [LoaderState, setLoaderState] = useState(true);
 
   useEffect(() => {
     getWorks()
       .then((responseData) => {
-        console.log("useEffect" + responseData + "useEffect");
+        console.log(responseData);
         // Filtrar los trabajos que no están baneados
         const filteredWorks = responseData.filter((work) => !work.banned);
         setWorksData(filteredWorks);
@@ -77,9 +78,11 @@ const Works = () => {
   };
 
   const sortWorks = (sort) => {
-    let params1 = { ...params, [sort.key]: sort.value };
+    let { price, name, ...params1 } = params;
+    params1 = { ...params1, [sort.key]: sort.value };
     console.log(params1);
     setParams(params1);
+    console.log(params1);
     getWorks(params1)
       .then((responseData) => {
         // Filtrar los trabajos que no están baneados

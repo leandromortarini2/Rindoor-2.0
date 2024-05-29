@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 
-export const PriceFilter = ({ filterWorksPrice }) => {
+export const PriceFilter = forwardRef(({ filterWorksPrice }, ref) => {
   const [min, setMin] = useState(0);
   const [on, setOn] = useState(false);
-  const [max, setMax] = useState(9999999);
+  const [max, setMax] = useState(99999999999);
   const show = 0;
 
+  const ResetearPrecios = () => {
+    setMin(0);
+    setMax(99999999999);
+    setOn(false);
+  };
+
+  useImperativeHandle(ref, () => ({
+    ResetearPrecios,
+  }));
+
   const handleMin = (event) => {
-    setMin(event.target.value);
+    const num = parseFloat(event.target.value.trim());
+    setMin(num);
   };
   const handleMax = (event) => {
     !on ? setOn(true) : "";
-    setMax(event.target.value);
+    const num = parseFloat(event.target.value.trim());
+    setMax(num);
   };
   const handleClick = () => {
     if (max > min) {
@@ -53,4 +65,4 @@ export const PriceFilter = ({ filterWorksPrice }) => {
       </div>
     </div>
   );
-};
+});

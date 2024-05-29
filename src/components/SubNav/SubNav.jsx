@@ -21,10 +21,16 @@ export const SubNav = ({
       childRef1.current.Resetear();
     }
   };
+  const childRef2 = useRef(null);
+  const Resetear2 = () => {
+    if (childRef2.current) {
+      childRef2.current.ResetearPrecios();
+    }
+  };
   return (
     <div className="bg-gray-800  flex w-full  md:flex-row flex-col items-center md:justify-evenly">
       <Selector filterWorksCategory={filterWorksCategory} ref={childRef} />
-      <PriceFilter filterWorksPrice={filterWorksPrice} />
+      <PriceFilter filterWorksPrice={filterWorksPrice} ref={childRef2} />
       <div className=" flex flex-row  ">
         <button
           type="button"
@@ -33,6 +39,7 @@ export const SubNav = ({
             resetData();
             Resetear();
             Resetear1();
+            Resetear2();
           }}
         >
           reset

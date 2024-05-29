@@ -21,8 +21,8 @@ export const SortBy = forwardRef(({ sortWorks }, ref) => {
   }));
 
   const sort = [
-    { name: "Precio: menor a mayor", key: "price", value: 0 },
-    { name: "Precio: mayor a menor", key: "price", value: 1 },
+    { name: "Precio: menor a mayor", key: "prices", value: 0 },
+    { name: "Precio: mayor a menor", key: "prices", value: 1 },
     { name: "Titulo: A-Z", key: "name", value: 0 },
     { name: "Titulo: Z-A", key: "name", value: 1 },
   ];
@@ -31,12 +31,12 @@ export const SortBy = forwardRef(({ sortWorks }, ref) => {
     <div className="font-medium h-30 md:w-40 relative w-full md:px-0 px-5">
       <div
         onClick={() => {
-          if (!selected) setOpen(!open);
+          setOpen(!open);
         }}
         className={`text-yellow-500 w-full p-2 flex items-center justify-between  ${
           open ? "rounded-none" : "rounded-b"
         } ${!selected && "text-gray-700"}
-        ${selected ? "hover:cursor-not-allowed" : "hover:cursor-pointer"}
+        hover:cursor-pointer
         `}
       >
         {selected ? selected : "Ordenar por:"}
