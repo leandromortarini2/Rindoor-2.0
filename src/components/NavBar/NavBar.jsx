@@ -130,15 +130,20 @@ export const NavBar = () => {
       {/* CONTAINER FLOTANTE */}
       {loginIcon === true ? (
         <div className="w-full flex justify-end">
-          <div className="hidden w-1/4 min-h-20 bg-gray-700 rounded-b-xl z-20 md:flex flex-col justify-evenly items-center absolute ">
+          <div className="hidden w-1/4 min-h-20 bg-gray-700 rounded-b-xl z-20 lg:flex flex-col justify-evenly items-center absolute ">
             {session ? (
               <>
                 <Link href="/profile">
-                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                  <button className=" w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Profile
                   </button>
                 </Link>
 
+                <Link href="/chat">
+                  <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Chat
+                  </button>
+                </Link>
                 <Link href="/subscription">
                   <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Subscription
@@ -146,7 +151,7 @@ export const NavBar = () => {
                 </Link>
                 {userData?.role === "ADMIN" ? (
                   <Link href="/admin">
-                    <button className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    <button className="w-[120px] h-[40px] xl:text-xl text-white border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-700 hover:bg-gray-700  hover:text-yellow-500 m-3 capitalize">
                       Admin
                     </button>
                   </Link>
@@ -158,7 +163,7 @@ export const NavBar = () => {
                       callbackUrl: "/",
                     });
                   }}
-                  className="w-[200px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+                  className="w-[120px] h-[40px] xl:text-xl text-white border p-1 block rounded-lg border-red-500 font-semibold duration-1000 bg-red-900 hover:bg-gray-700  hover:text-red-500 m-3"
                 >
                   Logout
                 </button>
@@ -216,6 +221,11 @@ export const NavBar = () => {
                     Profile
                   </button>
                 </Link>
+                <Link href="/chat">
+                  <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    Chat
+                  </button>
+                </Link>
                 <Link href="/subscription">
                   <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
                     Subscription
@@ -223,7 +233,7 @@ export const NavBar = () => {
                 </Link>
                 {userData?.role === "ADMIN" ? (
                   <Link href="/admin">
-                    <button className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3">
+                    <button className="w-[120px] h-[40px] xl:text-xl text-white border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-700 hover:bg-gray-700  hover:text-yellow-500 m-3 capitalize">
                       Admin
                     </button>
                   </Link>
@@ -231,7 +241,7 @@ export const NavBar = () => {
 
                 <button
                   onClick={handleSignOut}
-                  className="w-[120px] h-[40px] xl:text-xl text-gray-700 border p-1 block rounded-lg border-yellow-500 font-semibold duration-1000 bg-yellow-500 hover:bg-gray-700  hover:text-yellow-500 m-3"
+                  className="w-[120px] h-[40px] xl:text-xl text-white border p-1 block rounded-lg border-red-500 font-semibold duration-1000 bg-red-900 hover:bg-gray-700  hover:text-red-500 m-3"
                 >
                   Logout
                 </button>
