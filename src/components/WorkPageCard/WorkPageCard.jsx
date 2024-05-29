@@ -5,7 +5,8 @@ import { postPostulation } from "../../helpers/helperWorksPage";
 import { useAuth } from "../../app/context/Context";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
-
+import dynamic from "next/dynamic";
+import { MyComponent } from "../MyComponent/MyComponent";
 
 export const WorkPageCard = ({ cardData }) => {
   const { userData } = useAuth();
@@ -97,15 +98,9 @@ export const WorkPageCard = ({ cardData }) => {
     }
   }, [redirectPath]);
 
-
   return (
     <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
       <div className="flex flex-col items-center">
-        <div className="w-full">
-          <h2 className="flex-end text-2xl p-2 italic text-yellow-200 ">
-            Albañileria
-          </h2>
-        </div>
         <div className="m-2 flex flex-col lg:flex-row w-full">
           <div className="mx-5 lg:w-1/2 h-96 flex items-center justify-center">
             <img
@@ -130,12 +125,7 @@ export const WorkPageCard = ({ cardData }) => {
                 </h3>
               </div>
               <div>
-                <div className="flex flex-row items-center text-yellow-300 mt-3 lg:mt-0">
-                  <FaLocationDot size={30} />
-                  <h3 className="ml-5 mr-10 text-2xl">
-                    Zárate , Buenos Aires
-                  </h3>
-                </div>
+                <MyComponent />
                 <h3 className="my-5 text-3xl text-yellow-300">
                   Presupuesto : {cardData?.base_price}
                 </h3>
@@ -144,10 +134,12 @@ export const WorkPageCard = ({ cardData }) => {
           </div>
         </div>
         <div className="w-full flex flex-col items-center mt-10">
-          <h2 className="text-5xl font-bold text-yellow-300 my-5 underline underline-offset-1">
+          <h2 className="text-4xl font-bold text-yellow-300 my-5 capitalize">
             Descripción
           </h2>
-          <h4 className="w-4/5 my-5">{cardData?.description}</h4>
+          <h4 className="w-4/5 my-5 text-lg text-center">
+            {cardData?.description}
+          </h4>
         </div>
         <div className="bg-gray-900 rounded shadow-lg p-4 px-4 md:p-8 mb-6">
           <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
