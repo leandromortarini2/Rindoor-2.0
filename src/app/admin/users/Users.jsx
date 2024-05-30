@@ -12,48 +12,58 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [LoaderState, setLoaderState] = useState(true);
-
   const { userData } = useAuth();
 
   useEffect(() => {
-    try {
-      setLoaderState(true);
+    const timer = setTimeout(() => {
+      const checkUserRole = () => {
+        setLoaderState(true);
 
-      if (userData?.role !== "ADMIN") {
-        Swal.fire({
-          title: "Alto!",
-          text: "El acceso negado",
-          icon: "error",
-          confirmButtonText: "Completar",
-        });
-        redirect("/");
-      }
-    } finally {
-      setLoaderState(false); //agregale seguido del catch, este finally
-    }
+        try {
+          if (userData?.role !== "ADMIN") {
+            Swal.fire({
+              title: "Alto!",
+              text: "El acceso negado",
+              icon: "error",
+              confirmButtonText: "Completar",
+            }).then(() => {
+              redirect("/");
+            });
+          }
+        } finally {
+          setLoaderState(false);
+        }
+      };
+      checkUserRole();
+    }, 1000); // Esperar 1 segundo antes de verificar
+
+    return () => clearTimeout(timer); // Limpiar el temporizador en el desmontaje
   }, [userData]);
 
   useEffect(() => {
-    try {
+    const fetchGetUsers = async () => {
       setLoaderState(true);
-      const fetchGetUsers = async () => {
+      try {
         const users = await getUsers(currentPage, 10); // Adjust 10 according to your desired page size
         setUsers(users);
         console.log(users);
-      };
-      fetchGetUsers();
-    } finally {
-      setLoaderState(false); //agregale seguido del catch, este finally
-    }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoaderState(false);
+      }
+    };
+    fetchGetUsers();
   }, [currentPage]);
 
   const handlePagination = (page) => {
     setCurrentPage(page);
   };
+
   const handleBanned = async (id) => {
+    setLoaderState(true);
     try {
       const response = await banUser(id);
-
       Swal.fire({
         title: "Baneado!",
         text: "Usuario baneado con éxito",
@@ -61,8 +71,9 @@ const Users = () => {
         confirmButtonText: "Cool",
       });
       console.log(">>>>>>>>>>>", response);
-
-      // window.location.href = "/admin/users";
+      // Refresh users list after banning
+      const users = await getUsers(currentPage, 10);
+      setUsers(users);
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -71,7 +82,7 @@ const Users = () => {
         confirmButtonText: "Cool",
       });
     } finally {
-      setLoaderState(false); //agregale seguido del catch, este finally
+      setLoaderState(false);
     }
   };
 
@@ -87,7 +98,7 @@ const Users = () => {
               Usuarios
             </h2>
           </div>
-          <div className="w-full flex flex-col lg:flex-row  flex-wrap items-center justify-center">
+          <div className="w-full flex flex-col lg:flex-row flex-wrap items-center justify-center">
             {users?.length > 0 ? (
               users.map((user) => (
                 <div
@@ -163,7 +174,7 @@ const Users = () => {
               </p>
             )}
           </div>
-          <PaginacionUsers Pagination={handlePagination} />{" "}
+          <PaginacionUsers Pagination={handlePagination} />
         </div>
       )}
     </>

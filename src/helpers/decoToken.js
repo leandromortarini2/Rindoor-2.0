@@ -1,9 +1,10 @@
 /**
- * Esta funcion decodifica el token y devuelve los datos del usuario.
- * @param {string} token  Recibe un token
- * @returns {object}  devuelve los datos del usuario
+ * Decodifica un token JWT y devuelve su payload.
+ *
+ * @function decoToken
+ * @param {string} token - El token JWT que se desea decodificar.
+ * @returns {Object} El payload del token decodificado.
  */
-
 export function decoToken(token) {
   const arrayToken = token.split(".");
   const tokenPayload = JSON.parse(atob(arrayToken[1]));

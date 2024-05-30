@@ -10,18 +10,22 @@ import { getWorks } from "../../helpers/helperWorks";
 import { WorksPageSelector } from "../../components/WorksPageSelector/WorksPageSelector";
 import { wctest } from "../../components/WorkCard/dataTest";
 import Loader from "../../components/Loader/Loader";
+import { useSession } from "next-auth/react";
 
 const Works = () => {
   const [worksDataOg, setWorksDataOg] = useState([]);
   const [worksData, setWorksData] = useState([]);
   const [params, setParams] = useState({});
-  const [auxiliarParams, setAuxiliarParams] = useState({});
+  const [peishis, setPeishis] = useState(1);
   const [LoaderState, setLoaderState] = useState(true);
-
+  const limitp = { limit: 999999999 };
+  const { data: session } = useSession();
+  useEffect(() => {
+    console.log("rtarta", session);
+  }, [session]);
   useEffect(() => {
     getWorks()
       .then((responseData) => {
-        console.log(responseData);
         // Filtrar los trabajos que no están baneados
         const filteredWorks = responseData.filter((work) => !work.banned);
         setWorksData(filteredWorks);

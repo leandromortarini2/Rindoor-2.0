@@ -97,7 +97,7 @@ export const WorkPageCard = ({ cardData }) => {
   }, [redirectPath]);
 
   return (
-    <div className="bg-gray-800 min-h-screen w-4/5 my-5 rounded-2xl">
+    <div className="bg-gray-800 min-h-screen  w-full sm:w-4/5  sm:my-5 sm:rounded-2xl">
       <div className="ml-7 mt-2 flex-row flex items-center">
         <img src={cardData?.category.img} className=" w-10 h-10 " />
         <h3 className="text-yellow-200 italic text-2xl">
@@ -106,34 +106,34 @@ export const WorkPageCard = ({ cardData }) => {
       </div>
       <div className="flex flex-col items-center ">
         <div className="m-2 flex flex-col lg:flex-row w-full ">
-          <div className="mx-5 lg:w-1/2  flex items-center justify-center bg-white rounded">
+          <div className="mx-5 lg:w-1/2 mt-4 flex items-center justify-center rounded">
             <img
-              className=" rounded w-[540px] h-[540px] object-cover "
+              className=" rounded w-[540px] h-[260px] object-contain "
               src={cardData?.img}
               alt="ilustracion-trabajo"
             />
           </div>
           <div className="flex flex-col ml-4 lg:w-1/2 w-full ">
-            <div className="w-full flex justify-center lg:justify-normal my-5">
-              <h2 className="text-5xl font-bold text-yellow-300 lg:m-0 mt-10 ">
+            <div className="w-full flex justify-center lg:justify-normal mb-5">
+              <h2 className="text-5xl font-bold text-yellow-300 lg:m-0 mt-5">
                 {cardData?.name}
               </h2>
             </div>
             <div className="lg:flex-none lg:flex md:flex md:flex-row lg:flex-col w-full">
               <div className="lg:w-auto w-1/2">
-                <div className=" text-2xl text-yellow-300 flex ">
+                <div className=" text-2xl text-white flex ">
                   <FaLocationDot className="mt-0.5" />
                   <h3>{`${cardData?.city}, ${cardData?.province}`}</h3>
                 </div>
-                <h3 className="my-5 text-2xl text-yellow-300">
+                <h3 className="my-5 text-2xl text-white">
                   {`Creado el: ${formattedDate}`}
-                </h3>
-                <h3 className="my-5 text-2xl text-yellow-300">
-                  {`Usuario: ${cardData?.client.name}`}
                 </h3>
               </div>
               <div>
-                <h3 className=" text-3xl text-yellow-300">
+                <h3 className="mb-5 text-2xl text-white">
+                  {`Usuario: ${cardData?.client.name}`}
+                </h3>
+                <h3 className=" text-3xl text-white">
                   {`Presupuesto : ${cardData?.base_price}$`}
                 </h3>
               </div>
