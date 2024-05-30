@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 
 export const about = () => {
@@ -13,61 +12,46 @@ export const about = () => {
           />
         </div>
         <h3 className="text-center text-gray-900 text-2xl font-semibold">
-          Your door to reliable solutions.
+          Donde los profesionales te buscan a ti
         </h3>
         <p className="text-center text-gray-900 text-xl m-7 font-semibold ">
-          Rin|Door is an intuitive and secure platform, our company makes it
-          easy to find and hire professionals in different fields, from home
-          repairs to remodeling projects. Our unique approach allows users to
-          post their needs and receive offers from qualified professionals,
-          while ensuring safe and satisfactory transactions for both parties.
-          With Rin|Door, opening the door to excellence in service has never
-          been so simple.
+          Rin|Door is an intuitive and secure platform. Our company facilitates
+          the search and hiring of professionals in different fields, from home
+          repairs to construction projects remodeling. Our unique approach
+          allows users to post your needs and receive offers from qualified
+          professionals, ensuring safe and satisfactory transactions for both
+          parties. With Rin|Door, opening the door to service excellence has
+          never been so simple.
         </p>
       </div>
 
-      <div className="w-3/4 bg-gray-900 h-[450px] md:h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl shadow-gray-900 shadow-xl">
-        <h3 className="text-center text-yellow-300 text-2xl p-2 font-semibold">
+      <div className="w-3/4  min-h-[450px] md:min-h-80 sm:h-80   flex flex-col items-center justify-center rounded-xl ">
+        <h3 className="text-center text-gray-900 text-2xl p-2 font-semibold">
           Client
         </h3>
-        <p className="text-white text-lg md:text-xl text-justify p-4 ">
-          Register for free and access a wide range of services to meet your
-          needs. From home repairs to renovation projects, Rin|Door is your
-          gateway to trusted professionals. Post your service request today and
-          start receiving personalized offers from experts in your area. Open
-          the door to reliable solutions with Rin|Door!
+        <p className="text-gray-800 text-lg md:text-xl text-center p-4 ">
+          At Rin|Door, customers can register for free and create jobs where
+          professionals can apply. The users They have the freedom to choose
+          from a variety of experts qualified to carry out your projects, always
+          ensuring a Reliable and quality service. Discover how Rin|Door makes
+          it easier connection with trusted professionals for all your needs!
         </p>
-        <div className="w-full flex justify-center">
-          <button
-            type="button"
-            className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-[100px] md:w-[150px] text-center"
-          >
-            Registrarme
-          </button>
-        </div>
       </div>
 
-      <div className="w-3/4 bg-gray-900 h-[450px] md:h-96 sm:h-80 m-10  flex flex-col items-center justify-center rounded-xl shadow-gray-900 shadow-lg">
-        <h3 className="text-center text-yellow-300 text-2xl p-2 font-semibold">
-          Professional
+      <div className="w-3/4  min-h-[450px] md:min-h-80   flex flex-col items-center justify-center rounded-xl ">
+        <h3 className="text-center text-gray-900 text-2xl p-2 font-semibold">
+          Professionals
         </h3>
-        <p className="text-white  text-lg md:text-xl text-justify p-4">
-          Sign up now and get exclusive access to job opportunities in your
-          area. Become part of our community of qualified professionals and
-          access clients looking for your skills. Build your reputation and
-          close profitable deals with Rin|Door. Open the door to professional
-          success with us!
+        <p className="text-gray-800  text-lg md:text-xl text-center p-4">
+          At Rin|Door, professionals can subscribe monthly or annually at an
+          affordable price. Benefits include the ability to apply for jobs
+          posted by clients and, if they are chosen, a direct chat with
+          customers is enabled to facilitate communication and project
+          coordination. Furthermore, each work has a specific location, allowing
+          users to professionals see how close you are to them. Take advantage
+          of this opportunity to expand your business and connect with customers
+          who They need your services!
         </p>
-        <div className="w-full flex justify-center">
-          <Link href="/home">
-            <button
-              type="button"
-              className="text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-[100px] md:w-[150px] text-center"
-            >
-              Subscribe
-            </button>
-          </Link>
-        </div>
       </div>
     </div>
   );

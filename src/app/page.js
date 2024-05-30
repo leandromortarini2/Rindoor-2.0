@@ -14,7 +14,7 @@ export default function Home() {
           className=" w-56 sm:w-64 xl:w-80"
         />
         <h2 className="text-gray-700 xl:text-3xl font-bold">
-          Donde los profesionales te buscan a ti
+          Where professionals look for you
         </h2>
       </div>
       <Carrusel2 />
