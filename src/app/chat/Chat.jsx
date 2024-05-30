@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { redirect, useRouter } from "next/navigation";
 import Loader from "../../components/Loader/Loader";
 import pic from "../../assets/login.svg";
+import { useSession } from "next-auth/react";
 
 const img =
   "https://kottke.org/cdn-cgi/image/format=auto,fit=scale-down,width=1200,metadata=none/plus/misc/images/ai-faces-01.jpg";
@@ -76,7 +77,7 @@ const ShowChat = ({ messages, userTo }) => {
 };
 export const Chat = () => {
   //ACA ANDA EL CHAT ACA ANDA EL CHAT ACA ANDA EL CHAT ACA ANDA EL CHAT ACA ANDA EL CHAT
-
+  const { data: session } = useSession();
   const { userData } = useAuth();
   const [mensaje, setMensaje] = useState("");
   const [messages, setMessages] = useState(null);
@@ -87,24 +88,21 @@ export const Chat = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!userData) {
+    if (!session) {
+      if (session === null) {
         Swal.fire({
           title: "Espera!",
-          text: "Para entrar al chat, debes completar los datos!",
+          text: "Para ingresar al chat, debes iniciar sesion!",
           icon: "info",
-          confirmButtonText: "Completar",
+          confirmButtonText: "niciar sesion",
         }).then((result) => {
           if (result.isConfirmed) {
-            router.push("/update");
+            router.push("/");
           }
         });
       }
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [userData]);
-
+    }
+  }, [session]);
   useEffect(() => {
     if (userData === "ban") {
       Swal.fire({
