@@ -85,14 +85,13 @@ export const Chat = () => {
   const [userTo, setUserTo] = useState(null);
   const [userFrom, setUserFrom] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!userData) {
         Swal.fire({
           title: "Espera!",
-          text: "Para crear una publicacion debes completar tus datos",
+          text: "Para entrar al chat, debes completar los datos!",
           icon: "info",
           confirmButtonText: "Completar",
         }).then((result) => {
@@ -250,7 +249,7 @@ export const Chat = () => {
               )}
 
               <div className="h-1/6 w-full flex items-center p-4">
-                {messages?.length ? (
+                {contacts?.length ? (
                   <>
                     <input
                       className="w-full p-2 border border-gray-300 rounded text-black "
