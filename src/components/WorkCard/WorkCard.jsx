@@ -1,6 +1,12 @@
 import React from "react";
 
 export const WorkCard = ({ card }) => {
+  const date = new Date(card.created_at);
+  const formattedDate = date.toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
   return (
     <a
       key={card.name}
@@ -17,7 +23,7 @@ export const WorkCard = ({ card }) => {
           {card.name}
         </h5>
         {/* <p className="mb-3 font-normal text-yellow-300">{card.user}</p> */}
-        <p className="mb-3 font-normal text-yellow-300">{card.created_at}</p>
+        <p className="mb-3 font-normal text-yellow-300">{formattedDate}</p>
         <p className="mb-3 font-normal text-yellow-300">{card.category.name}</p>
         <p className="mb-3 font-normal text-yellow-300">{`${card.base_price}$`}</p>
       </div>

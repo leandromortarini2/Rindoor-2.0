@@ -15,48 +15,6 @@ const socket = io("https://rindoor-backend.onrender.com", {
   autoConnect: false,
 });
 
-const pruebaContact = [
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-  { name: "kusei" },
-];
-const userPrueba = {
-  id: "8c3255b0-3262-4135-b479-f1266f61d956",
-  isActive: true,
-  banned: false,
-  name: "OLVADIS HERNANDEZ LEDESMA",
-  email: "olvadishernandezledesma@gmail.com",
-  phone: "3233342333",
-  country: "Argentina",
-  province: "Neuquén",
-  city: "Buenos Aires",
-  address: "CL 99B #98A B Chinita",
-  coords: "-34.6158038,-58.4571143",
-  rating: 5,
-  role: "CLIENT",
-  planId: null,
-  customerId: null,
-  subscriptionId: null,
-  categories: [],
-};
-
 const ShowChat = ({ messages, userTo }) => {
   const converToTime = (dateToConver) => {
     const date = new Date(dateToConver);
