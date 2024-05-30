@@ -51,14 +51,14 @@ export const WorkPageCard = ({ cardData }) => {
   const handleClick = async () => {
     const validationErrors = validate(formData);
     setErrors(validationErrors);
-  
+
     const dataPostulations = {
       message: formData.message,
       offered_price: formData.offered_price,
       userId: userDataState.id,
       jobId: cardData.id,
     };
-  
+
     if (Object.keys(validationErrors).length === 0) {
       try {
         const response = await postPostulation(dataPostulations);
@@ -76,7 +76,8 @@ export const WorkPageCard = ({ cardData }) => {
       } catch (error) {
         Swal.fire({
           title: "Error",
-          text: "Sus categorías no coinciden con este trabajo.",
+          text:
+            error.message || "Sus categorías no coinciden con este trabajo.",
           icon: "error",
           confirmButtonText: "Aceptar",
         }).then(() => {
