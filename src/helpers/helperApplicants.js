@@ -73,3 +73,13 @@ export const getUserById = async (id) => {
       return { error: true, message: error.message };
     }
   };
+
+export const postUserChat = async (id) => {
+  try {
+    const response = await axios.post(URL_USERS, id)
+    console.log(response.data, 'response.data de postUserChat')
+    return response.data
+  } catch (error) {
+    console.log(error, 'error post par chat')
+  }
+}

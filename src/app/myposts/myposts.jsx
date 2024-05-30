@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { getJobIdMyPosts, getJobsMyPosts, putJobFinish, putPostulationsClose } from '../../helpers/helperApplicants';
+import { getJobIdMyPosts, getJobsMyPosts, postUserChat, putJobFinish, putPostulationsClose } from '../../helpers/helperApplicants';
 import Loader from '../../components/Loader/Loader';
 import { useAuth } from '../context/Context';
 import Swal from "sweetalert2";
@@ -58,12 +58,24 @@ export const myposts = () => {
       postulationId: postulationId,
       userId: userDataState.id,
     };
+    const dataChat = {
+      idUser: userDataState.id,
+      idContact: postulante.id,
+    }
+    
     try {
       setLoaderState(true);
       setJobStateProffesional({ postulante, job });
       const data = await putPostulationsClose(dataAcept);
-      // console.log(data, 'data put acept :::::::::::::::::::::::::::::::');
-      window.location.href= '/myposts'
+      const dataPostChat = await postUserChat(dataChat)
+      Swal.fire({
+        title: "¡Has seleccionado con exito al profesional!",
+        text: "Gracias por seguir eligiendo Rin|Door. Ahora puedes chatear con el profesional.",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+      console.log(dataPostChat, '::::::::::::::::dataPostChat')
+      window.location.href= '/chat'
     } catch (error) {
       console.log('error buttonAccept ---->', error);
     } finally {
